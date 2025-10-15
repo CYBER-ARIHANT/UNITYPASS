@@ -53,9 +53,9 @@ registerBtn.addEventListener('click', async () => {
             msgEl.style.color = 'green';
             msgEl.textContent = '✅ Registered successfully!';
 
-            // Redirect to profile
+            // Redirect to profile with phone in URL
             setTimeout(() => {
-                window.location.href = `profile.html?phone=${phone}`;
+                window.location.href = `profile.html?phone=${encodeURIComponent(phone)}`;
             }, 1000);
         } else {
             msgEl.style.color = 'red';

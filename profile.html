@@ -24,17 +24,22 @@
 const API_URL = 'https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe';
 const container = document.getElementById('profileContainer');
 
-// Get user's phone from URL
+// Get phone from URL
 const urlParams = new URLSearchParams(window.location.search);
 const currentPhone = urlParams.get('phone');
+console.log('Current phone:', currentPhone);
 
 async function loadWorkers(){
     try{
         const res = await fetch(API_URL);
         const data = await res.json();
         const workers = Array.isArray(data) ? data : [];
+        console.log('Fetched workers:', workers);
 
-        const userWorker = workers.find(w => w.Phone === currentPhone);
+        const userWorker = workers.find(
+            w => w.Phone && w.Phone.toString().trim() === currentPhone.trim()
+        );
+
         if(userWorker){
             displayWorker(userWorker);
         } else {
@@ -77,7 +82,7 @@ function displayWorker(worker){
             Location: document.getElementById(`location-${safeId}`).value.trim()
         };
         try{
-            const row = workers.find(w => w.Phone === worker.Phone);
+            const row = workers.find(w => w.Phone.toString().trim() === worker.Phone.toString().trim());
             const res = await fetch(`${API_URL}/${row._rowNumber}`, {
                 method: 'PATCH',
                 headers: {'Content-Type':'application/json'},
@@ -118,7 +123,6 @@ function displayWorker(worker){
     });
 }
 
-// Load profile on page open
 loadWorkers();
 </script>
 
