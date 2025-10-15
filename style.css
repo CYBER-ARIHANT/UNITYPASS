@@ -25,13 +25,18 @@ header {
 .logo-circle {
     width: 120px;
     height: 120px;
-    background: #fff;
-    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     animation: logoBounce 1s infinite alternate;
+}
+
+.logo-img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
 }
 
 .logo-text {
@@ -48,7 +53,7 @@ header {
     color: #fff;
 }
 
-/* ===== Logo Animations ===== */
+/* ===== Animations ===== */
 @keyframes logoBounce {
     0% { transform: translateY(0);}
     100% { transform: translateY(-10px);}
@@ -121,24 +126,20 @@ button:hover {
     text-align: center;
 }
 
-/* Slight delay for multiple cards */
 .id-card:nth-child(1){ animation-delay: 0.1s; }
 .id-card:nth-child(2){ animation-delay: 0.2s; }
 .id-card:nth-child(3){ animation-delay: 0.3s; }
 .id-card:nth-child(4){ animation-delay: 0.4s; }
 
-/* Keyframes for fadeInUp */
 @keyframes fadeInUp {
     0% { opacity: 0; transform: translateY(30px);}
     100% { opacity: 1; transform: translateY(0);}
 }
 
-/* ===== QR Codes ===== */
 .qr-code {
     margin: 15px auto;
 }
 
-/* ===== Editable Inputs in Cards ===== */
 .id-card input[type="text"] {
     width: 80%;
     margin: 8px 0;
@@ -153,7 +154,6 @@ button:hover {
     color: #999;
 }
 
-/* ===== Messages ===== */
 .id-card p {
     font-size: 0.9rem;
     margin-top: 10px;

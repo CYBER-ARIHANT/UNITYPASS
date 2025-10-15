@@ -13,7 +13,7 @@
 <header>
   <div class="logo-container">
     <div class="logo-circle">
-      <div id="logo-qr-profile"></div>
+      <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo-img">
     </div>
     <div class="logo-text">UNITYPASS</div>
     <div class="logo-slogan">One Skill. One Identity</div>
@@ -35,7 +35,7 @@ const container = document.getElementById('profileContainer');
 const downloadAllBtn = document.getElementById('downloadAllBtn');
 let workers = [];
 
-// Load all workers from SheetBest
+// Load all workers
 async function loadWorkers() {
     try {
         const res = await fetch(API_URL);
@@ -167,16 +167,6 @@ downloadAllBtn.addEventListener('click', () => {
 });
 
 loadWorkers();
-
-// Logo QR animation
-new QRCode(document.getElementById("logo-qr-profile"), {
-    text: "UNITYPASS Official Logo",
-    width: 100,
-    height: 100,
-    colorDark: "#ff3d3d",
-    colorLight: "#fff",
-    correctLevel: QRCode.CorrectLevel.H
-});
 </script>
 </body>
 </html>
