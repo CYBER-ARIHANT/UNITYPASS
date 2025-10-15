@@ -3,35 +3,81 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnityPass</title>
+<title>UnityPass Registration</title>
 <link rel="stylesheet" href="style.css">
-<script src="js/qrcode.min.js"></script>
 </head>
 <body>
+
 <header>
-  <div class="logo-container">
     <div class="logo-circle">
-      <div id="logo-qr"></div>
+        <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo-img">
     </div>
-    <div class="logo-text">UNITYPASS</div>
+    <h1>UnityPass Registration</h1>
     <div class="logo-slogan">One Skill. One Identity</div>
-  </div>
 </header>
 
-<main style="text-align:center; padding:50px;">
-  <a href="register.html"><button class="btn">Register Worker</button></a>
-  <a href="profile.html"><button class="btn">Lookup Worker</button></a>
+<main>
+    <input type="text" id="name" placeholder="Full Name" required><br>
+    <input type="text" id="phone" placeholder="Phone Number" required><br>
+    <input type="text" id="skill" placeholder="Skill" required><br>
+    <input type="text" id="location" placeholder="Location"><br>
+    <button id="registerBtn">Register</button>
+    <p id="msg"></p>
 </main>
 
 <script>
-new QRCode(document.getElementById("logo-qr"), {
-    text: "UNITYPASS Official Logo",
-    width: 100,
-    height: 100,
-    colorDark: "#ff3d3d",
-    colorLight: "#fff",
-    correctLevel: QRCode.CorrectLevel.H
+const API_URL = 'https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe';
+const registerBtn = document.getElementById('registerBtn');
+const msgEl = document.getElementById('msg');
+
+registerBtn.addEventListener('click', async () => {
+    const name = document.getElementById('name').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const skill = document.getElementById('skill').value.trim();
+    const location = document.getElementById('location').value.trim();
+
+    if(!name || !phone || !skill){
+        msgEl.style.color = 'red';
+        msgEl.textContent = 'Please fill all required fields!';
+        return;
+    }
+
+    const newUser = { Name: name, Phone: phone, Skill: skill, Location: location };
+
+    try {
+        const res = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(newUser)
+        });
+
+        const data = await res.json();
+        console.log('Registration response:', data);
+
+        if(res.ok){
+            msgEl.style.color = 'green';
+            msgEl.textContent = '✅ Registered successfully!';
+            // Clear fields
+            document.getElementById('name').value = '';
+            document.getElementById('phone').value = '';
+            document.getElementById('skill').value = '';
+            document.getElementById('location').value = '';
+
+            // Notify profile page in same browser
+            window.dispatchEvent(new CustomEvent('newWorker', { detail: newUser }));
+
+        } else {
+            msgEl.style.color = 'red';
+            msgEl.textContent = '❌ Registration failed. Try again!';
+        }
+
+    } catch(err){
+        console.error(err);
+        msgEl.style.color = 'red';
+        msgEl.textContent = '❌ Network error!';
+    }
 });
 </script>
+
 </body>
 </html>

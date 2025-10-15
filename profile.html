@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnityPass Profile</title>
+<title>UnityPass Profiles</title>
 <link rel="stylesheet" href="style.css">
 <script src="js/qrcode.min.js"></script>
 <script src="js/jspdf.umd.min.js"></script>
@@ -35,7 +35,7 @@ const container = document.getElementById('profileContainer');
 const downloadAllBtn = document.getElementById('downloadAllBtn');
 let workers = [];
 
-// Load all workers
+// Load all workers from Google Sheet
 async function loadWorkers() {
     try {
         const res = await fetch(API_URL);
@@ -46,7 +46,7 @@ async function loadWorkers() {
     }
 }
 
-// Display multiple editable worker profiles
+// Display workers
 function displayWorkers(workerArray) {
     container.innerHTML = '';
     if(workerArray.length === 0) {
@@ -70,7 +70,7 @@ function displayWorkers(workerArray) {
         `;
         container.appendChild(card);
 
-        // Generate QR code
+        // Generate QR
         new QRCode(document.getElementById(`qr-${safeId}`), {
             text: `Name: ${worker.Name}\nSkill: ${worker.Skill}\nPhone: ${worker.Phone}\nLocation: ${worker.Location}`,
             width: 130,
@@ -126,7 +126,7 @@ function displayWorkers(workerArray) {
     });
 }
 
-// Multi-field search
+// Search
 findBtn.addEventListener('click', () => {
     const query = searchInput.value.trim().toLowerCase();
     if(!query) return;
@@ -140,7 +140,7 @@ findBtn.addEventListener('click', () => {
     displayWorkers(matchedWorkers);
 });
 
-// Bulk download all PDFs
+// Bulk download
 downloadAllBtn.addEventListener('click', () => {
     const matchedCards = document.querySelectorAll('.id-card');
     if(matchedCards.length === 0) {
@@ -166,7 +166,16 @@ downloadAllBtn.addEventListener('click', () => {
     });
 });
 
+// Real-time listener for new registration
+window.addEventListener('newWorker', (e) => {
+    const newWorker = e.detail;
+    workers.push(newWorker);
+    displayWorkers([newWorker]); // Show new user immediately
+});
+
+// Initial load
 loadWorkers();
 </script>
+
 </body>
 </html>
