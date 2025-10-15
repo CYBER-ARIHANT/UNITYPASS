@@ -21,35 +21,38 @@
 </header>
 
 <main>
-  <input type="text" id="phoneInput" placeholder="Search by Phone, Name or Area">
-  <button id="findBtn">Find Profile</button>
+  <input type="text" id="searchInput" placeholder="Search by Phone, Name or Location">
+  <button id="searchBtn">Search</button>
   <button id="downloadAllBtn" style="background:#4CAF50;color:white;">Download All PDFs</button>
   <div id="profileContainer"></div>
 </main>
 
 <script>
 const API_URL = 'https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe';
-const searchInput = document.getElementById('phoneInput');
-const findBtn = document.getElementById('findBtn');
+const searchInput = document.getElementById('searchInput');
+const searchBtn = document.getElementById('searchBtn');
 const container = document.getElementById('profileContainer');
 const downloadAllBtn = document.getElementById('downloadAllBtn');
+
 let workers = [];
 
-// Load all workers from Google Sheet
+// Fetch latest workers from Google Sheet
 async function loadWorkers() {
     try {
         const res = await fetch(API_URL);
         const data = await res.json();
         workers = Array.isArray(data) ? data : [];
+        displayWorkers(workers);
     } catch(err){
         container.innerHTML = '<p style="color:red">Failed to load workers.</p>';
+        console.error(err);
     }
 }
 
-// Display workers
-function displayWorkers(workerArray) {
+// Display workers in cards
+function displayWorkers(workerArray){
     container.innerHTML = '';
-    if(workerArray.length === 0) {
+    if(workerArray.length === 0){
         container.innerHTML = '<p style="color:#666">No workers found.</p>';
         return;
     }
@@ -59,12 +62,12 @@ function displayWorkers(workerArray) {
         const card = document.createElement('div');
         card.className = 'id-card';
         card.innerHTML = `
-            <input type="text" id="nameField-${safeId}" value="${worker.Name}" placeholder="Full Name"><br>
-            <input type="text" id="skillField-${safeId}" value="${worker.Skill}" placeholder="Skill"><br>
-            <input type="text" id="phoneField-${safeId}" value="${worker.Phone}" placeholder="Phone Number" disabled><br>
-            <input type="text" id="locationField-${safeId}" value="${worker.Location}" placeholder="Location"><br>
-            <button id="updateBtn-${safeId}">Update Profile</button>
-            <button id="downloadBtn-${safeId}">Download PDF</button>
+            <input type="text" id="name-${safeId}" value="${worker.Name}" placeholder="Full Name"><br>
+            <input type="text" id="skill-${safeId}" value="${worker.Skill}" placeholder="Skill"><br>
+            <input type="text" id="phone-${safeId}" value="${worker.Phone}" placeholder="Phone Number" disabled><br>
+            <input type="text" id="location-${safeId}" value="${worker.Location}" placeholder="Location"><br>
+            <button id="update-${safeId}">Update Profile</button>
+            <button id="download-${safeId}">Download PDF</button>
             <div class="qr-code" id="qr-${safeId}"></div>
             <p id="msg-${safeId}"></p>
         `;
@@ -78,13 +81,14 @@ function displayWorkers(workerArray) {
         });
 
         // Update profile
-        document.getElementById(`updateBtn-${safeId}`).addEventListener('click', async () => {
+        document.getElementById(`update-${safeId}`).addEventListener('click', async () => {
             const updatedWorker = {
-                Name: document.getElementById(`nameField-${safeId}`).value.trim(),
-                Skill: document.getElementById(`skillField-${safeId}`).value.trim(),
-                Location: document.getElementById(`locationField-${safeId}`).value.trim()
+                Name: document.getElementById(`name-${safeId}`).value.trim(),
+                Skill: document.getElementById(`skill-${safeId}`).value.trim(),
+                Location: document.getElementById(`location-${safeId}`).value.trim()
             };
-            try {
+
+            try{
                 const row = workers.find(w => w.Phone === worker.Phone);
                 const res = await fetch(`${API_URL}/${row._rowNumber}`, {
                     method: 'PATCH',
@@ -94,7 +98,8 @@ function displayWorkers(workerArray) {
                 const msgEl = document.getElementById(`msg-${safeId}`);
                 if(res.ok){
                     msgEl.style.color = 'green';
-                    msgEl.textContent = '✅ Profile updated successfully!';
+                    msgEl.textContent = '✅ Profile updated!';
+                    // regenerate QR
                     new QRCode(document.getElementById(`qr-${safeId}`), {
                         text: `Name: ${updatedWorker.Name}\nSkill: ${updatedWorker.Skill}\nPhone: ${worker.Phone}\nLocation: ${updatedWorker.Location}`,
                         width: 130,
@@ -111,67 +116,69 @@ function displayWorkers(workerArray) {
             }
         });
 
-        // Download individual PDF
-        document.getElementById(`downloadBtn-${safeId}`).addEventListener('click', () => {
+        // Download PDF
+        document.getElementById(`download-${safeId}`).addEventListener('click', () => {
             const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({ unit: 'mm', format: 'a6' });
+            const doc = new jsPDF({ unit:'mm', format:'a6' });
             doc.setFontSize(14);
-            doc.text(`Name: ${document.getElementById(`nameField-${safeId}`).value}`, 10, 20);
+            doc.text(`Name: ${document.getElementById(`name-${safeId}`).value}`, 10, 20);
             doc.setFontSize(12);
-            doc.text(`Skill: ${document.getElementById(`skillField-${safeId}`).value}`, 10, 30);
+            doc.text(`Skill: ${document.getElementById(`skill-${safeId}`).value}`, 10, 30);
             doc.text(`Phone: ${worker.Phone}`, 10, 40);
-            doc.text(`Location: ${document.getElementById(`locationField-${safeId}`).value}`, 10, 50);
-            doc.save(`${document.getElementById(`nameField-${safeId}`).value}_UnityPass.pdf`);
+            doc.text(`Location: ${document.getElementById(`location-${safeId}`).value}`, 10, 50);
+            doc.save(`${document.getElementById(`name-${safeId}`).value}_UnityPass.pdf`);
         });
     });
 }
 
-// Search
-findBtn.addEventListener('click', () => {
+// Search by name/phone/location
+searchBtn.addEventListener('click', () => {
     const query = searchInput.value.trim().toLowerCase();
     if(!query) return;
 
-    const matchedWorkers = workers.filter(w => 
-        (w.Phone && w.Phone.includes(query)) ||
+    const filtered = workers.filter(w => 
         (w.Name && w.Name.toLowerCase().includes(query)) ||
+        (w.Phone && w.Phone.includes(query)) ||
         (w.Location && w.Location.toLowerCase().includes(query))
     );
 
-    displayWorkers(matchedWorkers);
+    displayWorkers(filtered);
 });
 
-// Bulk download
+// Bulk download all visible workers
 downloadAllBtn.addEventListener('click', () => {
-    const matchedCards = document.querySelectorAll('.id-card');
-    if(matchedCards.length === 0) {
-        alert('No workers to download.');
+    const cards = document.querySelectorAll('.id-card');
+    if(cards.length === 0){
+        alert('No workers to download');
         return;
     }
-
-    matchedCards.forEach(card => {
-        const nameField = card.querySelector('input[id^="nameField"]').value;
-        const skillField = card.querySelector('input[id^="skillField"]').value;
-        const phoneField = card.querySelector('input[id^="phoneField"]').value;
-        const locationField = card.querySelector('input[id^="locationField"]').value;
+    cards.forEach(card => {
+        const name = card.querySelector('input[id^="name-"]').value;
+        const skill = card.querySelector('input[id^="skill-"]').value;
+        const phone = card.querySelector('input[id^="phone-"]').value;
+        const location = card.querySelector('input[id^="location-"]').value;
 
         const { jsPDF } = window.jspdf;
-        const doc = new jsPDF({ unit: 'mm', format: 'a6' });
+        const doc = new jsPDF({ unit:'mm', format:'a6' });
         doc.setFontSize(14);
-        doc.text(`Name: ${nameField}`, 10, 20);
+        doc.text(`Name: ${name}`, 10, 20);
         doc.setFontSize(12);
-        doc.text(`Skill: ${skillField}`, 10, 30);
-        doc.text(`Phone: ${phoneField}`, 10, 40);
-        doc.text(`Location: ${locationField}`, 10, 50);
-        doc.save(`${nameField}_UnityPass.pdf`);
+        doc.text(`Skill: ${skill}`, 10, 30);
+        doc.text(`Phone: ${phone}`, 10, 40);
+        doc.text(`Location: ${location}`, 10, 50);
+        doc.save(`${name}_UnityPass.pdf`);
     });
 });
 
-// Real-time listener for new registration
-window.addEventListener('newWorker', (e) => {
+// Real-time listener for registration from same browser
+window.addEventListener('newWorker', e => {
     const newWorker = e.detail;
     workers.push(newWorker);
-    displayWorkers([newWorker]); // Show new user immediately
+    displayWorkers([newWorker]);
 });
+
+// Auto-fetch latest Google Sheet every 10 seconds
+setInterval(loadWorkers, 10000);
 
 // Initial load
 loadWorkers();
