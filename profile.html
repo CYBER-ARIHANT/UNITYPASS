@@ -11,66 +11,56 @@
 <body>
 
 <header>
-  <div class="logo-container">
-    <div class="logo-circle">
-      <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo-img">
-    </div>
-    <div class="logo-text">UNITYPASS</div>
-    <div class="logo-slogan">One Skill. One Identity</div>
-  </div>
+    <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo">
+    <h1>Your UnityPass Profile</h1>
+    <p class="slogan">One Skill. One Identity</p>
 </header>
 
 <main>
-  <div id="profileContainer"></div>
+    <div id="profileContainer"></div>
 </main>
 
 <script>
 const API_URL = 'https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe';
 const container = document.getElementById('profileContainer');
 
-// Get phone from URL
+// Get user's phone from URL
 const urlParams = new URLSearchParams(window.location.search);
-const currentPhone = urlParams.get('phone'); // user’s phone
+const currentPhone = urlParams.get('phone');
 
-let workers = [];
-
-// Fetch latest workers
 async function loadWorkers(){
     try{
         const res = await fetch(API_URL);
         const data = await res.json();
-        workers = Array.isArray(data) ? data : [];
+        const workers = Array.isArray(data) ? data : [];
 
-        // Show only current user
         const userWorker = workers.find(w => w.Phone === currentPhone);
         if(userWorker){
             displayWorker(userWorker);
         } else {
-            container.innerHTML = '<p style="color:red">Profile not found yet.</p>';
+            container.innerHTML = '<p style="color:red">Profile not found.</p>';
         }
+
     } catch(err){
         console.error(err);
         container.innerHTML = '<p style="color:red">Failed to load profile.</p>';
     }
 }
 
-// Display a single worker profile
 function displayWorker(worker){
-    container.innerHTML = '';
     const safeId = (worker.Name || 'no-name').replace(/\s+/g,'_');
-    const card = document.createElement('div');
-    card.className = 'id-card';
-    card.innerHTML = `
-        <input type="text" id="name-${safeId}" value="${worker.Name}" placeholder="Full Name"><br>
-        <input type="text" id="skill-${safeId}" value="${worker.Skill}" placeholder="Skill"><br>
-        <input type="text" id="phone-${safeId}" value="${worker.Phone}" placeholder="Phone Number" disabled><br>
-        <input type="text" id="location-${safeId}" value="${worker.Location}" placeholder="Location"><br>
-        <button id="update-${safeId}">Update Profile</button>
-        <button id="download-${safeId}">Download PDF</button>
-        <div class="qr-code" id="qr-${safeId}"></div>
-        <p id="msg-${safeId}"></p>
+    container.innerHTML = `
+        <div class="id-card">
+            <input type="text" id="name-${safeId}" value="${worker.Name}" placeholder="Full Name"><br>
+            <input type="text" id="skill-${safeId}" value="${worker.Skill}" placeholder="Skill"><br>
+            <input type="text" id="phone-${safeId}" value="${worker.Phone}" placeholder="Phone Number" disabled><br>
+            <input type="text" id="location-${safeId}" value="${worker.Location}" placeholder="Location"><br>
+            <button id="update-${safeId}">Update Profile</button>
+            <button id="download-${safeId}">Download PDF</button>
+            <div class="qr-code" id="qr-${safeId}"></div>
+            <p id="msg-${safeId}"></p>
+        </div>
     `;
-    container.appendChild(card);
 
     // Generate QR
     new QRCode(document.getElementById(`qr-${safeId}`), {
@@ -128,7 +118,7 @@ function displayWorker(worker){
     });
 }
 
-// Initial load
+// Load profile on page open
 loadWorkers();
 </script>
 

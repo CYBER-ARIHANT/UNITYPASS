@@ -9,11 +9,9 @@
 <body>
 
 <header>
-    <div class="logo-circle">
-        <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo-img">
-    </div>
+    <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo">
     <h1>UnityPass Registration</h1>
-    <div class="logo-slogan">One Skill. One Identity</div>
+    <p class="slogan">One Skill. One Identity</p>
 </header>
 
 <main>
@@ -54,13 +52,14 @@ registerBtn.addEventListener('click', async () => {
         if(res.ok){
             msgEl.style.color = 'green';
             msgEl.textContent = '✅ Registered successfully!';
-            // Redirect to their profile page
+
+            // Redirect to profile
             setTimeout(() => {
                 window.location.href = `profile.html?phone=${phone}`;
-            }, 1000); // 1s delay so user sees success message
+            }, 1000);
         } else {
             msgEl.style.color = 'red';
-            msgEl.textContent = '❌ Registration failed. Try again!';
+            msgEl.textContent = '❌ Registration failed!';
         }
 
     } catch(err){
