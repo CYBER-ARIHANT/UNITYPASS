@@ -51,21 +51,13 @@ registerBtn.addEventListener('click', async () => {
             body: JSON.stringify(newUser)
         });
 
-        const data = await res.json();
-        console.log('Registration response:', data);
-
         if(res.ok){
             msgEl.style.color = 'green';
             msgEl.textContent = '✅ Registered successfully!';
-            // Clear fields
-            document.getElementById('name').value = '';
-            document.getElementById('phone').value = '';
-            document.getElementById('skill').value = '';
-            document.getElementById('location').value = '';
-
-            // Notify profile page in same browser
-            window.dispatchEvent(new CustomEvent('newWorker', { detail: newUser }));
-
+            // Redirect to their profile page
+            setTimeout(() => {
+                window.location.href = `profile.html?phone=${phone}`;
+            }, 1000); // 1s delay so user sees success message
         } else {
             msgEl.style.color = 'red';
             msgEl.textContent = '❌ Registration failed. Try again!';
