@@ -1,123 +1,102 @@
+// Google Sheet API URL
 const sheetUrl = "https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe";
 
-// ---------------- Registration ----------------
-document.getElementById('registerForm')?.addEventListener('submit', async e=>{
-  e.preventDefault();
-  const name = document.getElementById('name').value.trim();
-  const skill = document.getElementById('skill').value.trim();
-  const phone = document.getElementById('phone').value.trim();
-  const location = document.getElementById('location').value.trim();
-  const msg = document.getElementById('message');
+/* ---------------- Registration ---------------- */
+document.getElementById('registerForm')?.addEventListener('submit', async function(e){
+    e.preventDefault();
 
-  if(!/^\d{10}$/.test(phone)){
-    msg.innerText="Phone must be exactly 10 digits";
-    msg.style.color="red";
-    return;
-  }
+    const name = document.getElementById('name').value.trim();
+    const skill = document.getElementById('skill').value.trim();
+    const phone = document.getElementById('phone').value.trim();
+    const location = document.getElementById('location').value.trim();
 
-  const data={NAME:name,SKILL:skill,PHONE:phone,LOCATION:location};
+    // Validate phone: exactly 10 digits
+    if(!/^\d{10}$/.test(phone)){
+        alert("Phone number must be exactly 10 digits.");
+        return;
+    }
 
-  try{
-    const res = await fetch(sheetUrl,{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(data)
-    });
-    if(!res.ok) throw new Error("Sheet error");
+    const data = {
+        NAME: name,
+        SKILL: skill,
+        PHONE: phone,
+        LOCATION: location
+    };
 
-    // Save profile to localStorage BEFORE redirect
-    localStorage.setItem("profile", JSON.stringify(data));
-    msg.innerText="Registration successful!";
-    msg.style.color="green";
-    setTimeout(()=>window.location.href="profile.html",500);
-  }catch(err){
-    console.error(err);
-    msg.innerText="Registration failed!";
-    msg.style.color="red";
-  }
+    try {
+        const res = await fetch(sheetUrl, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        });
+
+        if(!res.ok) throw new Error("Failed to register");
+
+        const response = await res.json();
+        console.log("SheetBest response:", response);
+
+        // Save profile locally
+        localStorage.setItem('profile', JSON.stringify(data));
+
+        alert("Registration successful!");
+        window.location.href = "profile.html";
+    } catch(err) {
+        console.error(err);
+        alert("Registration failed. Check Sheet URL and column names.");
+    }
 });
 
-// ---------------- Profile Page ----------------
-document.addEventListener('DOMContentLoaded',()=>{
-  const profile = JSON.parse(localStorage.getItem('profile'));
-  const container = document.getElementById('profileContainer');
+/* ---------------- Profile Page ---------------- */
+window.addEventListener('DOMContentLoaded', () => {
+    const profile = JSON.parse(localStorage.getItem('profile') || '{}');
+    if(!profile.NAME) return;
 
-  if(!profile){
-    alert("No profile found. Please register first.");
-    window.location.href="register.html";
-    return;
-  }
+    // Display profile info
+    document.getElementById('pName').innerText = profile.NAME;
+    document.getElementById('pSkill').innerText = profile.SKILL;
+    document.getElementById('pPhone').innerText = profile.PHONE;
+    document.getElementById('pLocation').innerText = profile.LOCATION;
 
-  container.innerHTML=`
-    <p><strong>Name:</strong> ${profile.NAME}</p>
-    <p><strong>Skill:</strong> ${profile.SKILL}</p>
-    <p><strong>Phone:</strong> ${profile.PHONE}</p>
-    <p><strong>Location:</strong> ${profile.LOCATION}</p>
-    <div id="qrcode"></div>
-    <button id="downloadPDF" class="btn">Download PDF</button>
-    <button id="deleteProfile" class="btn danger">Delete Profile</button>
-  `;
+    // Generate QR code
+    const qr = new QRious({
+        element: document.getElementById('qrCode'),
+        value: `Name: ${profile.NAME}\nSkill: ${profile.SKILL}\nPhone: ${profile.PHONE}\nLocation: ${profile.LOCATION}`,
+        size: 200
+    });
 
-  // Generate QR code
-  new QRCode(document.getElementById("qrcode"),{
-    text:`Name:${profile.NAME}\nSkill:${profile.SKILL}\nPhone:${profile.PHONE}\nLocation:${profile.LOCATION}`,
-    width:150,height:150
-  });
+    // QR bounce on click
+    const qrCanvas = document.getElementById('qrCode');
+    qrCanvas.addEventListener('click', () => {
+        qrCanvas.style.transform = "scale(1.2)";
+        setTimeout(() => { qrCanvas.style.transform = "scale(1.1)"; }, 200);
+    });
 
-  // ---------------- PDF Download ----------------
-  document.getElementById('downloadPDF').addEventListener('click',()=>{
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    // PDF download
+    document.getElementById('downloadPdf').addEventListener('click', () => {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        doc.setFontSize(16);
+        doc.text("UnityPass Profile", 20, 20);
+        doc.setFontSize(12);
+        doc.text(`Name: ${profile.NAME}`, 20, 40);
+        doc.text(`Skill: ${profile.SKILL}`, 20, 50);
+        doc.text(`Phone: ${profile.PHONE}`, 20, 60);
+        doc.text(`Location: ${profile.LOCATION}`, 20, 70);
+        doc.addImage(document.getElementById('qrCode').toDataURL("image/png"), 'PNG', 20, 80, 50, 50);
+        doc.save('UnityPass_Profile.pdf');
+    });
 
-    const logo = new Image();
-    logo.src='Unitypass.jpg';
-
-    logo.onload = ()=>{
-      // Header background
-      doc.setFillColor(255, 140, 0); // orange
-      doc.rect(0,0,210,30,'F');
-
-      // Logo
-      doc.addImage(logo,'JPEG',10,5,40,20);
-
-      // Title
-      doc.setFontSize(18);
-      doc.setTextColor(255,255,255);
-      doc.setFont('helvetica','bold');
-      doc.text("UnityPass Profile",60,20);
-
-      // Profile box with border
-      doc.setDrawColor(255,140,0);
-      doc.setLineWidth(0.8);
-      doc.rect(10,40,190,80);
-
-      // Profile text inside box
-      doc.setFontSize(12);
-      doc.setTextColor(0,0,0);
-      doc.setFont('helvetica','normal');
-      doc.text(`Name: ${profile.NAME}`,20,55);
-      doc.text(`Skill: ${profile.SKILL}`,20,65);
-      doc.text(`Phone: ${profile.PHONE}`,20,75);
-      doc.text(`Location: ${profile.LOCATION}`,20,85);
-
-      // QR Code
-      const qrCanvas = document.querySelector('#qrcode canvas');
-      doc.addImage(qrCanvas.toDataURL('image/png'),'PNG',150,50,50,50);
-
-      // Footer
-      doc.setFontSize(10);
-      doc.setTextColor(100,100,100);
-      doc.text("Generated by UnityPass",10,135);
-
-      doc.save(`${profile.NAME}_UnityPass.pdf`);
-    };
-  });
-
-  // ---------------- Delete Profile ----------------
-  document.getElementById('deleteProfile').addEventListener('click',()=>{
-    if(confirm("Are you sure you want to delete your profile?")){
-      localStorage.removeItem('profile');
-      window.location.href="index.html";
-    }
-  });
+    // Delete profile
+    document.getElementById('deleteProfile')?.addEventListener('click', async () => {
+        if(confirm("Are you sure you want to delete your profile?")){
+            if(profile.PHONE){
+                try {
+                    await fetch(`https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe/PHONE/${profile.PHONE}`, { method: 'DELETE' });
+                } catch(e){ console.log("Failed to delete from sheet"); }
+            }
+            localStorage.removeItem('profile');
+            alert("Profile deleted successfully!");
+            window.location.href = "index.html";
+        }
+    });
 });
