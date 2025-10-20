@@ -1,3 +1,4 @@
+/* ---------------- General ---------------- */
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
@@ -34,15 +35,13 @@ nav ul li a:hover, nav ul li a.active {
   color: #ff8c00; 
 }
 
-.home { 
-  text-align: center; 
-  padding: 100px 20px; 
+.fade-in { 
+  opacity: 0; 
+  animation: fadeIn 1s ease forwards; 
 }
-.home h1 { 
-  font-size: 2.5rem; 
-}
-.home h1 span { 
-  color: #ff6600; 
+@keyframes fadeIn { 
+  from { opacity: 0; transform: translateY(20px); } 
+  to { opacity: 1; transform: translateY(0); } 
 }
 
 .btn { 
@@ -61,6 +60,55 @@ nav ul li a:hover, nav ul li a.active {
   background: #d9534f; 
 }
 
+/* ---------------- Home Section ---------------- */
+.home {
+    text-align: center;
+    padding: 120px 20px;
+}
+
+.home h1 {
+    font-size: 2.8rem;
+    font-weight: 700;
+}
+
+.home h1 span {
+    color: #ff6600;
+}
+
+.home p {
+    font-size: 1.1rem;
+    margin: 15px 0 25px 0;
+    color: #555;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#homeAbout {
+    max-width: 700px;
+    margin: 50px auto;
+    background: #fffaf0;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    text-align: justify;
+    border-left: 6px solid #ff6600;
+}
+
+#homeAbout h2 {
+    text-align: center;
+    color: #ff6600;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+#homeAbout p {
+    line-height: 1.7;
+    color: #333;
+    font-size: 1rem;
+}
+
+/* ---------------- Form Section ---------------- */
 .form-section { 
   max-width: 400px; 
   margin: 50px auto; 
@@ -82,6 +130,7 @@ nav ul li a:hover, nav ul li a.active {
   border-radius: 5px; 
 }
 
+/* ---------------- Profile Section ---------------- */
 .profile-card { 
   max-width: 400px; 
   margin: 40px auto; 
@@ -92,23 +141,6 @@ nav ul li a:hover, nav ul li a.active {
   text-align: center; 
 }
 
-.fade-in { 
-  opacity: 0; 
-  animation: fadeIn 1s ease forwards; 
-}
-@keyframes fadeIn { 
-  from { opacity: 0; transform: translateY(20px); } 
-  to { opacity: 1; transform: translateY(0); } 
-}
-
-.buttons { 
-  display: flex; 
-  justify-content: center; 
-  gap: 10px; 
-  margin-top: 20px; 
-}
-
-/* ----------------- About Us & UnityPass styling ----------------- */
 #aboutUs, #aboutUnityPass {
     max-width: 650px;
     margin: 30px auto;
@@ -134,8 +166,15 @@ nav ul li a:hover, nav ul li a.active {
     font-size: 1rem;
 }
 
+.buttons { 
+  display: flex; 
+  justify-content: center; 
+  gap: 10px; 
+  margin-top: 20px; 
+}
+
 @media screen and (max-width: 768px){
-    #aboutUs, #aboutUnityPass {
+    #aboutUs, #aboutUnityPass, #homeAbout {
         padding: 20px;
         margin: 20px auto;
     }

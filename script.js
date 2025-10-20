@@ -49,12 +49,7 @@ document.getElementById('registerForm')?.addEventListener('submit', async functi
 /* ---------------- Profile Page ---------------- */
 window.addEventListener('DOMContentLoaded', () => {
     const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-
-    if(!profile.NAME){
-        alert("No profile found. Please register first.");
-        window.location.href = "register.html";
-        return;
-    }
+    if(!profile.NAME) return;
 
     // Display profile info
     document.getElementById('pName').innerText = profile.NAME;
@@ -80,56 +75,14 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('downloadPdf').addEventListener('click', () => {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-
-        // Draw border
-        doc.setDrawColor(255,140,0);
-        doc.setLineWidth(1.5);
-        doc.rect(10, 10, 190, 280);
-
-        // Header
-        doc.setFontSize(18);
-        doc.setTextColor(255,102,0);
-        doc.setFont("helvetica", "bold");
-        doc.text("UnityPass Profile", 105, 25, { align: "center" });
-
-        // Profile Info
+        doc.setFontSize(16);
+        doc.text("UnityPass Profile", 20, 20);
         doc.setFontSize(12);
-        doc.setTextColor(0,0,0);
-        doc.setFont("helvetica", "normal");
-        let startY = 40;
-        doc.text(`Name: ${profile.NAME}`, 20, startY);
-        doc.text(`Skill: ${profile.SKILL}`, 20, startY + 10);
-        doc.text(`Phone: ${profile.PHONE}`, 20, startY + 20);
-        doc.text(`Location: ${profile.LOCATION}`, 20, startY + 30);
-
-        // About Us
-        startY += 50;
-        doc.setFontSize(14);
-        doc.setTextColor(255,102,0);
-        doc.setFont("helvetica", "bold");
-        doc.text("About Us:", 20, startY);
-
-        doc.setFontSize(12);
-        doc.setTextColor(0,0,0);
-        let aboutUsText = "We are a team of students from class 9 — Arihant Jha, Aarav Arora, and Prisha Jain. We created this website to facilitate employment and empowerment opportunities for unskilled and semi-skilled laborers.";
-        doc.text(aboutUsText, 20, startY + 7, { maxWidth: 170 });
-
-        // About UnityPass
-        startY += 35;
-        doc.setFontSize(14);
-        doc.setTextColor(255,102,0);
-        doc.setFont("helvetica", "bold");
-        doc.text("About UnityPass:", 20, startY);
-
-        doc.setFontSize(12);
-        doc.setTextColor(0,0,0);
-        let aboutUnityPassText = "UnityPass is a digital skill ID card designed to help individuals document and showcase their skills professionally. Users can create a digital profile containing personal details, skills, and location, which can be shared with employers or training providers.";
-        doc.text(aboutUnityPassText, 20, startY + 7, { maxWidth: 170 });
-
-        // QR Code on right
-        doc.addImage(document.getElementById('qrCode').toDataURL("image/png"), 'PNG', 140, 40, 50, 50);
-
-        // Save PDF
+        doc.text(`Name: ${profile.NAME}`, 20, 40);
+        doc.text(`Skill: ${profile.SKILL}`, 20, 50);
+        doc.text(`Phone: ${profile.PHONE}`, 20, 60);
+        doc.text(`Location: ${profile.LOCATION}`, 20, 70);
+        doc.addImage(document.getElementById('qrCode').toDataURL("image/png"), 'PNG', 20, 80, 50, 50);
         doc.save('UnityPass_Profile.pdf');
     });
 
