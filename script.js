@@ -10,18 +10,12 @@ document.getElementById('registerForm')?.addEventListener('submit', async functi
     const phone = document.getElementById('phone').value.trim();
     const location = document.getElementById('location').value.trim();
 
-    // Validate phone: exactly 10 digits
     if(!/^\d{10}$/.test(phone)){
         alert("Phone number must be exactly 10 digits.");
         return;
     }
 
-    const data = {
-        NAME: name,
-        SKILL: skill,
-        PHONE: phone,
-        LOCATION: location
-    };
+    const data = { NAME: name, SKILL: skill, PHONE: phone, LOCATION: location };
 
     try {
         const res = await fetch(sheetUrl, {
@@ -32,12 +26,7 @@ document.getElementById('registerForm')?.addEventListener('submit', async functi
 
         if(!res.ok) throw new Error("Failed to register");
 
-        const response = await res.json();
-        console.log("SheetBest response:", response);
-
-        // Save profile locally
         localStorage.setItem('profile', JSON.stringify(data));
-
         alert("Registration successful!");
         window.location.href = "profile.html";
     } catch(err) {
@@ -50,7 +39,6 @@ document.getElementById('registerForm')?.addEventListener('submit', async functi
 window.addEventListener('DOMContentLoaded', () => {
     const profile = JSON.parse(localStorage.getItem('profile') || '{}');
 
-    // Populate profile info if available
     if(profile.NAME){
         const profileHTML = `
             <p><strong>Name:</strong> ${profile.NAME}</p>
@@ -60,21 +48,17 @@ window.addEventListener('DOMContentLoaded', () => {
         `;
         document.getElementById('profileInfo').innerHTML = profileHTML;
 
-        // Generate QR code
         const qr = new QRious({
             element: document.getElementById('qrCode'),
             value: `Name: ${profile.NAME}\nSkill: ${profile.SKILL}\nPhone: ${profile.PHONE}\nLocation: ${profile.LOCATION}`,
             size: 200
         });
 
-        // QR bounce on click
-        const qrCanvas = document.getElementById('qrCode');
-        qrCanvas.addEventListener('click', () => {
-            qrCanvas.style.transform = "scale(1.2)";
-            setTimeout(() => { qrCanvas.style.transform = "scale(1.1)"; }, 200);
+        document.getElementById('qrCode').addEventListener('click', () => {
+            document.getElementById('qrCode').style.transform = "scale(1.2)";
+            setTimeout(() => { document.getElementById('qrCode').style.transform = "scale(1.1)"; }, 200);
         });
 
-        // PDF download
         document.getElementById('downloadPdf').addEventListener('click', () => {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -89,13 +73,11 @@ window.addEventListener('DOMContentLoaded', () => {
             doc.save('UnityPass_Profile.pdf');
         });
 
-        // Delete profile
         document.getElementById('deleteProfile')?.addEventListener('click', async () => {
             if(confirm("Are you sure you want to delete your profile?")){
                 if(profile.PHONE){
-                    try {
-                        await fetch(`${sheetUrl}/PHONE/${profile.PHONE}`, { method: 'DELETE' });
-                    } catch(e){ console.log("Failed to delete from sheet"); }
+                    try { await fetch(`${sheetUrl}/PHONE/${profile.PHONE}`, { method: 'DELETE' }); } 
+                    catch(e){ console.log("Failed to delete from sheet"); }
                 }
                 localStorage.removeItem('profile');
                 alert("Profile deleted successfully!");
@@ -104,10 +86,50 @@ window.addEventListener('DOMContentLoaded', () => {
         });
 
     } else {
-        // If no profile, show message and hide QR / buttons
         document.getElementById('profileInfo').innerHTML = "<p>No profile found. Please register first.</p>";
         document.getElementById('qrCode').style.display = "none";
         document.getElementById('downloadPdf').style.display = "none";
         document.getElementById('deleteProfile').style.display = "none";
+    }
+
+    /* ---------------- Search Functionality ---------------- */
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+
+    if(searchInput){
+        searchInput.addEventListener('input', async () => {
+            const query = searchInput.value.trim().toLowerCase();
+            if(!query){
+                searchResults.innerHTML = "";
+                return;
+            }
+
+            try {
+                const res = await fetch(sheetUrl);
+                const data = await res.json();
+
+                const filtered = data.filter(item => 
+                    item.NAME?.toLowerCase().includes(query) ||
+                    item.SKILL?.toLowerCase().includes(query) ||
+                    item.LOCATION?.toLowerCase().includes(query)
+                );
+
+                if(filtered.length === 0){
+                    searchResults.innerHTML = "<p>No matching profiles found.</p>";
+                } else {
+                    searchResults.innerHTML = filtered.map(p => `
+                        <div class="profile-card">
+                            <p><strong>Name:</strong> ${p.NAME}</p>
+                            <p><strong>Skill:</strong> ${p.SKILL}</p>
+                            <p><strong>Phone:</strong> ${p.PHONE}</p>
+                            <p><strong>Location:</strong> ${p.LOCATION}</p>
+                        </div>
+                    `).join('');
+                }
+            } catch(e){
+                console.error("Search error:", e);
+                searchResults.innerHTML = "<p>Failed to fetch profiles.</p>";
+            }
+        });
     }
 });
