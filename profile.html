@@ -16,21 +16,51 @@
     <ul>
         <li><a href="index.html">Home</a></li>
         <li><a href="register.html">Register</a></li>
-        <li><a href="profile.html">Profile</a></li>
+        <li><a href="profile.html" class="active">Profile</a></li>
     </ul>
 </nav>
 
 <main>
     <h2>Your <span style="color:#ff6600;">Profile</span></h2>
+
+    <!-- Profile Info -->
     <div id="profileInfo">
         <p><strong>Name:</strong> <span id="pName"></span></p>
         <p><strong>Skill:</strong> <span id="pSkill"></span></p>
         <p><strong>Phone:</strong> <span id="pPhone"></span></p>
         <p><strong>Location:</strong> <span id="pLocation"></span></p>
     </div>
+
+    <!-- About Us -->
+    <div id="aboutUs">
+        <h3>About Us</h3>
+        <p>
+            We are a team of students from class 9 — Arihant Jha, Aarav Arora, and Prisha Jain. 
+            We created this website to facilitate employment and empowerment opportunities 
+            for unskilled and semi-skilled laborers, providing them with a platform to 
+            showcase their skills and connect with potential employers.
+        </p>
+    </div>
+
+    <!-- About UnityPass -->
+    <div id="aboutUnityPass">
+        <h3>About UnityPass</h3>
+        <p>
+            UnityPass is a digital skill ID card designed to help individuals document and 
+            showcase their skills in a professional manner. By registering on UnityPass, 
+            users can create a digital profile containing their personal details, skills, 
+            and location. This profile can be shared with employers or training providers, 
+            helping unskilled and semi-skilled workers gain access to employment opportunities 
+            and skill development programs efficiently and securely.
+        </p>
+    </div>
+
+    <!-- QR Code and Buttons -->
     <canvas id="qrCode"></canvas>
-    <button id="downloadPdf">Download PDF</button>
-    <button id="deleteProfile">Delete Profile</button>
+    <div class="buttons">
+        <button id="downloadPdf" class="btn">Download PDF</button>
+        <button id="deleteProfile" class="btn danger">Delete Profile</button>
+    </div>
 </main>
 
 <script src="script.js"></script>

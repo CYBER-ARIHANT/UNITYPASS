@@ -49,7 +49,12 @@ document.getElementById('registerForm')?.addEventListener('submit', async functi
 /* ---------------- Profile Page ---------------- */
 window.addEventListener('DOMContentLoaded', () => {
     const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-    if(!profile.NAME) return;
+
+    if(!profile.NAME){
+        alert("No profile found. Please register first.");
+        window.location.href = "register.html";
+        return;
+    }
 
     // Display profile info
     document.getElementById('pName').innerText = profile.NAME;
@@ -75,14 +80,32 @@ window.addEventListener('DOMContentLoaded', () => {
     document.getElementById('downloadPdf').addEventListener('click', () => {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
+
+        // Header
         doc.setFontSize(16);
+        doc.setTextColor(255,102,0);
         doc.text("UnityPass Profile", 20, 20);
+
+        // Profile Info
         doc.setFontSize(12);
+        doc.setTextColor(0,0,0);
         doc.text(`Name: ${profile.NAME}`, 20, 40);
         doc.text(`Skill: ${profile.SKILL}`, 20, 50);
         doc.text(`Phone: ${profile.PHONE}`, 20, 60);
         doc.text(`Location: ${profile.LOCATION}`, 20, 70);
-        doc.addImage(document.getElementById('qrCode').toDataURL("image/png"), 'PNG', 20, 80, 50, 50);
+
+        // About Us
+        doc.setFontSize(12);
+        doc.text("About Us:", 20, 85);
+        doc.text("We are a team of students from class 9 — Arihant Jha, Aarav Arora, and Prisha Jain. We created this website to facilitate employment and empowerment opportunities for unskilled laborers.", 20, 92, {maxWidth: 170});
+
+        // About UnityPass
+        doc.text("About UnityPass:", 20, 110);
+        doc.text("UnityPass is a digital skill ID card designed to help individuals document and showcase their skills in a professional manner, connect with employers, and access employment opportunities.", 20, 117, {maxWidth: 170});
+
+        // QR Code
+        doc.addImage(document.getElementById('qrCode').toDataURL("image/png"), 'PNG', 150, 30, 50, 50);
+
         doc.save('UnityPass_Profile.pdf');
     });
 
