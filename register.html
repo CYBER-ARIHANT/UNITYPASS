@@ -3,60 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UnityPass Registration</title>
+  <title>UnityPass - Register</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo">
-  <h1>UnityPass Registration</h1>
-</header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="image/Unitypass.jpg" alt="UnityPass Logo" class="logo-img">
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link" id="home-link">Home</a></li>
+      <li><a href="register.html" class="nav-link" id="register-link">Register</a></li>
+      <li><a href="profile.html" class="nav-link" id="profile-link">Profile</a></li>
+      <li><a href="admin.html" class="nav-link" id="admin-link">Admin</a></li>
+    </ul>
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
 
-<section class="register-form">
-  <form id="regForm">
-    <input type="text" id="name" placeholder="Full Name" required>
-    <input type="text" id="skill" placeholder="Skill" required>
-    <input type="text" id="phone" placeholder="Phone Number" required>
-    <input type="text" id="location" placeholder="Location" required>
-    <button type="submit">Register</button>
-  </form>
-  <p id="regMsg"></p>
-</section>
+  <div class="container">
+    <h1>Register Your UnityPass</h1>
+    <form id="register-form">
+      <label>Name:</label><br>
+      <input type="text" id="name" required><br><br>
 
-<script>
-const API_URL = 'https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe';
-const form = document.getElementById('regForm');
-const msg = document.getElementById('regMsg');
+      <label>Email:</label><br>
+      <input type="email" id="email" required><br><br>
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
+      <label>Skills:</label><br>
+      <input type="text" id="skills" placeholder="e.g., Electrician, Painter"><br><br>
 
-  const newUser = {
-    Name: document.getElementById('name').value.trim(),
-    Skill: document.getElementById('skill').value.trim(),
-    Phone: document.getElementById('phone').value.trim(),
-    Location: document.getElementById('location').value.trim()
-  };
+      <button type="submit">Register</button>
+    </form>
+    <p id="register-msg"></p>
+  </div>
 
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify(newUser)
-  });
-
-  if (res.ok) {
-    msg.style.color = 'green';
-    msg.textContent = '✅ Registered Successfully! Redirecting...';
-    setTimeout(() => {
-      window.location.href = `profile.html?phone=${newUser.Phone}`;
-    }, 1500);
-  } else {
-    msg.style.color = 'red';
-    msg.textContent = '❌ Failed to register. Try again.';
-  }
-});
-</script>
-
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

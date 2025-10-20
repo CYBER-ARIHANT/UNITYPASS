@@ -3,160 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UnityPass Profile</title>
+  <title>UnityPass - Profile</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-  <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo">
-  <h1>UnityPass Profiles</h1>
-  <p class="slogan">One Skill. One Identity</p>
-</header>
+  <nav class="navbar">
+    <div class="logo">
+      <img src="image/Unitypass.jpg" alt="UnityPass Logo" class="logo-img">
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html" class="nav-link" id="home-link">Home</a></li>
+      <li><a href="register.html" class="nav-link" id="register-link">Register</a></li>
+      <li><a href="profile.html" class="nav-link" id="profile-link">Profile</a></li>
+      <li><a href="admin.html" class="nav-link" id="admin-link">Admin</a></li>
+    </ul>
+    <div class="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </nav>
 
-<section style="text-align:center; margin:20px;">
-  <input type="text" id="searchInput" placeholder="Search by name, phone, or location..." style="padding:10px; width:300px; font-size:16px;">
-  <button id="searchBtn" style="padding:10px 20px;">Search</button>
-</section>
+  <div class="container">
+    <h1>Your Profile</h1>
+    <div id="profile-card">
+      <p><strong>Name:</strong> <span id="profile-name">Arihant Jha</span></p>
+      <p><strong>Email:</strong> <span id="profile-email">example@email.com</span></p>
+      <p><strong>Skills:</strong> <span id="profile-skills">Electrician, Painter</span></p>
+      <div id="qrcode"></div>
+      <button id="download-pdf">Download UnityPass PDF</button>
+    </div>
+  </div>
 
-<main>
-  <div id="profileContainer"></div>
-</main>
-
-<script src="js/qrcode.min.js"></script>
-<script src="js/jspdf.umd.min.js"></script>
-
-<script>
-const API_URL = 'https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe';
-const container = document.getElementById('profileContainer');
-const searchInput = document.getElementById('searchInput');
-const searchBtn = document.getElementById('searchBtn');
-
-const urlParams = new URLSearchParams(window.location.search);
-const currentPhone = urlParams.get('phone');
-
-let allWorkers = [];
-
-async function loadWorkers() {
-  try {
-    const res = await fetch(API_URL);
-    allWorkers = await res.json();
-    if (currentPhone) {
-      const userWorker = allWorkers.find(
-        w => String(w.Phone).trim() === String(currentPhone).trim()
-      );
-      if (userWorker) {
-        displayWorkers([userWorker]);
-        return;
-      }
-    }
-    displayWorkers(allWorkers);
-  } catch (err) {
-    console.error('❌ Error loading profile:', err);
-    container.innerHTML = '<p style="color:red">🚨 Failed to load profile.</p>';
-  }
-}
-
-searchBtn.addEventListener('click', () => {
-  const query = searchInput.value.trim().toLowerCase();
-  if (!query) {
-    displayWorkers(allWorkers);
-    return;
-  }
-
-  const filtered = allWorkers.filter(worker =>
-    worker.Name.toLowerCase().includes(query) ||
-    worker.Phone.toString().includes(query) ||
-    worker.Location.toLowerCase().includes(query)
-  );
-
-  if (filtered.length > 0) {
-    displayWorkers(filtered);
-  } else {
-    container.innerHTML = '<p style="color:red">No results found.</p>';
-  }
-});
-
-function displayWorkers(workers) {
-  container.innerHTML = '';
-  workers.forEach(worker => displayWorker(worker));
-}
-
-function displayWorker(worker) {
-  const safeId = (worker.Name || 'no-name').replace(/\s+/g, '_');
-  const card = document.createElement('div');
-  card.classList.add('id-card');
-  card.innerHTML = `
-    <input type="text" id="name-${safeId}" value="${worker.Name}" placeholder="Full Name"><br>
-    <input type="text" id="skill-${safeId}" value="${worker.Skill}" placeholder="Skill"><br>
-    <input type="text" id="phone-${safeId}" value="${worker.Phone}" disabled><br>
-    <input type="text" id="location-${safeId}" value="${worker.Location}" placeholder="Location"><br>
-    <button id="update-${safeId}">Update</button>
-    <button id="download-${safeId}">Download PDF</button>
-    <div class="qr-code" id="qr-${safeId}"></div>
-    <p id="msg-${safeId}"></p>
-  `;
-  container.appendChild(card);
-
-  new QRCode(document.getElementById(`qr-${safeId}`), {
-    text: `Name: ${worker.Name}\nSkill: ${worker.Skill}\nPhone: ${worker.Phone}\nLocation: ${worker.Location}`,
-    width: 130,
-    height: 130
-  });
-
-  document.getElementById(`update-${safeId}`).addEventListener('click', async () => {
-    const updatedWorker = {
-      Name: document.getElementById(`name-${safeId}`).value.trim(),
-      Skill: document.getElementById(`skill-${safeId}`).value.trim(),
-      Location: document.getElementById(`location-${safeId}`).value.trim()
-    };
-
-    const resAll = await fetch(API_URL);
-    const rows = await resAll.json();
-    const row = rows.find(w => String(w.Phone).trim() === String(worker.Phone).trim());
-
-    if (!row || !row._rowNumber) {
-      alert('⚠️ Row not found for update.');
-      return;
-    }
-
-    const res = await fetch(`${API_URL}/${row._rowNumber}`, {
-      method: 'PATCH',
-      headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify(updatedWorker)
-    });
-
-    const msgEl = document.getElementById(`msg-${safeId}`);
-    if (res.ok) {
-      msgEl.style.color = 'green';
-      msgEl.textContent = '✅ Profile updated!';
-      document.getElementById(`qr-${safeId}`).innerHTML = '';
-      new QRCode(document.getElementById(`qr-${safeId}`), {
-        text: `Name: ${updatedWorker.Name}\nSkill: ${updatedWorker.Skill}\nPhone: ${worker.Phone}\nLocation: ${updatedWorker.Location}`,
-        width: 130,
-        height: 130
-      });
-    } else {
-      msgEl.style.color = 'red';
-      msgEl.textContent = '❌ Failed to update profile.';
-    }
-  });
-
-  document.getElementById(`download-${safeId}`).addEventListener('click', () => {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF({ unit: 'mm', format: 'a6' });
-    doc.setFontSize(14);
-    doc.text(`Name: ${document.getElementById(`name-${safeId}`).value}`, 10, 20);
-    doc.setFontSize(12);
-    doc.text(`Skill: ${document.getElementById(`skill-${safeId}`).value}`, 10, 30);
-    doc.text(`Phone: ${worker.Phone}`, 10, 40);
-    doc.text(`Location: ${document.getElementById(`location-${safeId}`).value}`, 10, 50);
-    doc.save(`${document.getElementById(`name-${safeId}`).value}_UnityPass.pdf`);
-  });
-}
-
-loadWorkers();
-</script>
-
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
