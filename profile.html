@@ -1,37 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Profile - UnityPass</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Profile - UnityPass</title>
+<link rel="stylesheet" href="style.css">
+<script src="qrcode.min.js"></script>
+<script src="jspdf.umd.min.js"></script>
 </head>
 <body>
-  <nav>
-    <img src="Unitypass.jpg" alt="Logo" class="logo big-logo">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="register.html">Register</a></li>
-      <li><a href="profile.html" class="active">Profile</a></li>
-    </ul>
-  </nav>
+<nav>
+  <img src="Unitypass.jpg" alt="Logo" class="logo big-logo">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="register.html">Register</a></li>
+    <li><a href="profile.html" class="active">Profile</a></li>
+  </ul>
+</nav>
 
-  <section class="profile-card fade-in">
-    <h2>My Profile 🪪</h2>
-    <p><strong>Name:</strong> <span id="pName"></span></p>
-    <p><strong>Skill:</strong> <span id="pSkill"></span></p>
-    <p><strong>Phone:</strong> <span id="pPhone"></span></p>
-    <p><strong>Location:</strong> <span id="pLocation"></span></p>
-    <canvas id="qrCode"></canvas>
+<section class="profile-card">
+  <div id="profileContainer"></div>
+</section>
 
-    <div class="buttons">
-      <button id="downloadPdf" class="btn">Download PDF</button>
-      <button id="deleteProfile" class="btn danger">Delete Profile</button>
-    </div>
-  </section>
-
-  <script src="libs/qrious.min.js"></script>
-  <script src="libs/jspdf.umd.min.js"></script>
-  <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

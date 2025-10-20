@@ -1,7 +1,7 @@
 const sheetUrl = "https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe";
 
 // Registration
-document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
+document.getElementById('registerForm')?.addEventListener('submit', async e => {
   e.preventDefault();
   const name = document.getElementById('name').value.trim();
   const skill = document.getElementById('skill').value.trim();
@@ -9,104 +9,60 @@ document.getElementById('registerForm')?.addEventListener('submit', async (e) =>
   const location = document.getElementById('location').value.trim();
   const msg = document.getElementById('message');
 
-  if (phone.length !== 10) {
-    msg.innerText = "Phone number must be exactly 10 digits!";
-    msg.style.color = "red";
-    return;
-  }
+  if(!/^\d{10}$/.test(phone)) { msg.innerText = "Phone must be 10 digits"; msg.style.color="red"; return; }
 
   const data = { NAME: name, SKILL: skill, PHONE: phone, LOCATION: location };
-
   try {
-    await fetch(sheetUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+    const res = await fetch(sheetUrl, {
+      method: 'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data)
     });
-
+    if(!res.ok) throw new Error("Sheet error");
     localStorage.setItem('profile', JSON.stringify(data));
-    msg.innerText = "Registration successful!";
-    msg.style.color = "green";
-    setTimeout(() => { window.location.href = "profile.html"; }, 1000);
-  } catch (err) {
-    msg.innerText = "Registration failed!";
-    msg.style.color = "red";
-  }
+    msg.innerText="Registration successful!"; msg.style.color="green";
+    setTimeout(()=>window.location.href="profile.html",1000);
+  } catch(err) { console.error(err); msg.innerText="Registration failed!"; msg.style.color="red"; }
 });
 
-// Profile Page
-document.addEventListener('DOMContentLoaded', () => {
-  const profile = JSON.parse(localStorage.getItem('profile') || '{}');
-  if (profile.NAME) {
-    document.getElementById('pName')?.innerText = profile.NAME;
-    document.getElementById('pSkill')?.innerText = profile.SKILL;
-    document.getElementById('pPhone')?.innerText = profile.PHONE;
-    document.getElementById('pLocation')?.innerText = profile.LOCATION;
+// Profile
+document.addEventListener('DOMContentLoaded', ()=>{
+  const profile = JSON.parse(localStorage.getItem('profile'));
+  const container = document.getElementById('profileContainer');
+  if(!profile) { alert("No profile found."); window.location.href="register.html"; return; }
 
-    new QRious({
-      element: document.getElementById('qrCode'),
-      value: `Name: ${profile.NAME}\nSkill: ${profile.SKILL}\nPhone: ${profile.PHONE}\nLocation: ${profile.LOCATION}`,
-      size: 200
-    });
-  }
+  container.innerHTML = `
+    <p><strong>Name:</strong> ${profile.NAME}</p>
+    <p><strong>Skill:</strong> ${profile.SKILL}</p>
+    <p><strong>Phone:</strong> ${profile.PHONE}</p>
+    <p><strong>Location:</strong> ${profile.LOCATION}</p>
+    <div id="qrcode"></div>
+    <button id="downloadPDF" class="btn">Download PDF</button>
+    <button id="deleteProfile" class="btn danger">Delete Profile</button>
+  `;
 
-  // Download PDF
-  document.getElementById('downloadPdf')?.addEventListener('click', () => {
-    if (!profile.NAME) return alert("No profile found!");
+  new QRCode(document.getElementById("qrcode"), {
+    text:`Name:${profile.NAME}\nSkill:${profile.SKILL}\nPhone:${profile.PHONE}\nLocation:${profile.LOCATION}`,
+    width:150,height:150
+  });
+
+  document.getElementById('downloadPDF').addEventListener('click', ()=>{
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-
-    const cardX = 15, cardY = 20, cardWidth = pageWidth - 30, cardHeight = 150;
-    doc.setFillColor(255, 248, 240);
-    doc.roundedRect(cardX, cardY, cardWidth, cardHeight, 10, 10, 'F');
-    doc.setDrawColor(255, 140, 0);
-    doc.setLineWidth(2);
-    doc.roundedRect(cardX, cardY, cardWidth, cardHeight, 10, 10, 'S');
-
-    const img = new Image();
-    img.src = 'Unitypass.jpg';
-    img.onload = () => {
-      const logoW = 60, logoH = 25;
-      const centerX = (pageWidth - logoW) / 2;
-      doc.addImage(img, 'JPEG', centerX, cardY + 10, logoW, logoH);
-      doc.setFontSize(18);
-      doc.setFont("helvetica", "bold");
-      doc.setTextColor(255, 140, 0);
-      doc.text("UNITYPASS ID CARD", pageWidth / 2, cardY + 50, { align: "center" });
-
+    const logo = new Image(); logo.src='Unitypass.jpg';
+    logo.onload = ()=>{
+      doc.addImage(logo,'JPEG',10,10,40,20);
+      doc.setFontSize(16); doc.text("UnityPass Profile",60,25);
       doc.setFontSize(12);
-      doc.setTextColor(0, 0, 0);
-      doc.text(`Name: ${profile.NAME}`, cardX + 20, cardY + 70);
-      doc.text(`Skill: ${profile.SKILL}`, cardX + 20, cardY + 85);
-      doc.text(`Phone: ${profile.PHONE}`, cardX + 20, cardY + 100);
-      doc.text(`Location: ${profile.LOCATION}`, cardX + 20, cardY + 115);
-
-      const qrCanvas = document.getElementById('qrCode');
-      doc.addImage(qrCanvas.toDataURL('image/png'), 'PNG', pageWidth - 70, cardY + 70, 45, 45);
-
-      doc.setFontSize(10);
-      doc.setTextColor(120, 120, 120);
-      doc.text("Generated by UnityPass", pageWidth / 2, cardY + cardHeight - 10, { align: "center" });
-
+      doc.text(`Name: ${profile.NAME}`,20,50);
+      doc.text(`Skill: ${profile.SKILL}`,20,60);
+      doc.text(`Phone: ${profile.PHONE}`,20,70);
+      doc.text(`Location: ${profile.LOCATION}`,20,80);
+      const qrCanvas = document.querySelector('#qrcode canvas');
+      doc.addImage(qrCanvas.toDataURL('image/png'),'PNG',150,50,40,40);
       doc.save('UnityPass_Profile.pdf');
     };
   });
 
-  // Delete Profile
-  document.getElementById('deleteProfile')?.addEventListener('click', async () => {
-    if (!profile.PHONE) return alert("No profile to delete.");
-    const confirmDelete = confirm("Are you sure you want to delete your profile?");
-    if (!confirmDelete) return;
-
-    try {
-      await fetch(`${sheetUrl}/PHONE/${profile.PHONE}`, { method: 'DELETE' });
-    } catch {
-      console.log("Failed to delete from sheet (may not exist)");
-    }
-
-    localStorage.removeItem('profile');
-    alert("Profile deleted successfully!");
-    window.location.href = "index.html";
+  document.getElementById('deleteProfile').addEventListener('click', ()=>{
+    if(confirm("Are you sure?")) { localStorage.removeItem('profile'); window.location.href="index.html"; }
   });
 });

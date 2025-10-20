@@ -14,121 +14,28 @@ nav {
   padding: 15px 30px;
 }
 
-.logo {
-  height: 40px;
-  transition: transform 0.3s ease;
-}
+.logo { height: 40px; transition: 0.3s ease; }
+.logo.big-logo { height: 60px; }
 
-.logo.big-logo {
-  height: 60px;
-}
+nav ul { list-style: none; display: flex; gap: 20px; }
+nav ul li a { color: white; text-decoration: none; font-weight: 600; }
+nav ul li a:hover, nav ul li a.active { color: #ff8c00; }
 
-.logo:hover {
-  transform: scale(1.05);
-}
+.home { text-align: center; padding: 100px 20px; }
+.home h1 { font-size: 2.5rem; }
+.home h1 span { color: #ff8c00; }
 
-nav ul {
-  list-style: none;
-  display: flex;
-  gap: 20px;
-}
+.btn { background: #ff8c00; color: white; padding: 12px 25px; border: none; border-radius: 6px; font-weight: 600; cursor: pointer; }
+.btn:hover { transform: scale(1.05); }
+.btn.danger { background: #d9534f; }
 
-nav ul li a {
-  color: white;
-  text-decoration: none;
-  font-weight: 600;
-  transition: color 0.3s ease;
-}
+.form-section { max-width: 400px; margin: 50px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 10px #ddd; }
+.form-section h2 { text-align: center; margin-bottom: 20px; }
+.form-section input { display: block; width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; }
 
-nav ul li a:hover,
-nav ul li a.active {
-  color: #ff8c00;
-}
+.profile-card { max-width: 400px; margin: 40px auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 0 15px #ddd; text-align: center; }
 
-.home {
-  text-align: center;
-  padding: 100px 20px;
-}
+.fade-in { opacity: 0; animation: fadeIn 1s ease forwards; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-.home h1 {
-  font-size: 2.5rem;
-}
-
-.home h1 span {
-  color: #ff8c00;
-}
-
-.btn {
-  background: #ff8c00;
-  color: white;
-  padding: 12px 25px;
-  border: none;
-  border-radius: 6px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.btn:hover {
-  transform: scale(1.05);
-}
-
-.btn.danger {
-  background: #d9534f;
-}
-
-.form-section {
-  max-width: 400px;
-  margin: 50px auto;
-  background: white;
-  padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px #ddd;
-}
-
-.form-section h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.form-section input {
-  display: block;
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-}
-
-.profile-card {
-  max-width: 400px;
-  margin: 40px auto;
-  background: white;
-  padding: 25px;
-  border-radius: 10px;
-  box-shadow: 0 0 15px #ddd;
-  text-align: center;
-}
-
-.profile-card p {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 8px 0;
-}
-
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 1s ease forwards;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-}
+.buttons { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
