@@ -1,10 +1,10 @@
-body { font-family: 'Arial', sans-serif; background: #f7f7f7; margin:0; padding:0; }
-header { text-align: center; padding: 20px; }
-.logo { width: 100px; animation: spin 3s linear infinite; }
-.slogan { font-weight: bold; color: #2c3e50; }
-main { display: flex; flex-direction: column; align-items: center; margin-top: 20px; }
-input { padding: 10px; margin: 5px; width: 250px; font-size: 16px; }
-button { padding: 10px 20px; margin: 5px; font-size: 16px; font-weight: bold; cursor: pointer; }
-.id-card { background: #fff; padding: 20px; margin: 10px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; }
+body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; }
+header { text-align: center; padding: 20px; background: #222; color: #fff; }
+.logo { width: 100px; animation: spin 5s linear infinite; }
+.slogan { font-weight: bold; color: #ffcc00; }
+.id-card { background: #fff; padding: 20px; margin: 10px auto; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); text-align: center; width: 300px; }
+input { padding: 10px; margin: 5px; width: 90%; font-size: 16px; }
+button { padding: 10px 20px; margin: 5px; font-size: 14px; font-weight: bold; cursor: pointer; border: none; background: #222; color: white; border-radius: 5px; }
+button:hover { background: #ffcc00; color: #222; }
 .qr-code { margin-top: 10px; }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }

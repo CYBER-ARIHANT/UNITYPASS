@@ -1,74 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnityPass Registration</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnityPass — One Skill One Identity</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <header>
-    <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo">
-    <h1>UnityPass Registration</h1>
-    <p class="slogan">One Skill. One Identity</p>
+  <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo">
+  <h1>Welcome to UnityPass</h1>
+  <p class="slogan">Skill Se Samman 🇮🇳</p>
 </header>
 
-<main>
-    <input type="text" id="name" placeholder="Full Name" required><br>
-    <input type="text" id="phone" placeholder="Phone Number" required><br>
-    <input type="text" id="skill" placeholder="Skill" required><br>
-    <input type="text" id="location" placeholder="Location"><br>
-    <button id="registerBtn">Register</button>
-    <p id="msg"></p>
-</main>
+<section class="home-container">
+  <h2>One Nation. One Skill ID.</h2>
+  <p>🪪 UnityPass gives every skilled worker a digital & physical ID linked to their verified skills.</p>
+  <div class="home-buttons">
+    <a href="register.html" class="btn">Register Now</a>
+    <a href="profile.html" class="btn">View Profiles</a>
+  </div>
+</section>
 
-<script>
-const API_URL = 'https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe';
-const registerBtn = document.getElementById('registerBtn');
-const msgEl = document.getElementById('msg');
-
-registerBtn.addEventListener('click', async () => {
-    const name = document.getElementById('name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const skill = document.getElementById('skill').value.trim();
-    const location = document.getElementById('location').value.trim();
-
-    if(!name || !phone || !skill){
-        msgEl.style.color = 'red';
-        msgEl.textContent = 'Please fill all required fields!';
-        return;
-    }
-
-    const newUser = { Name: name, Phone: phone, Skill: skill, Location: location };
-
-    try {
-        const res = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(newUser)
-        });
-
-        if(res.ok){
-            msgEl.style.color = 'green';
-            msgEl.textContent = '✅ Registered successfully!';
-
-            // Redirect to profile with phone in URL
-            setTimeout(() => {
-                window.location.href = `profile.html?phone=${encodeURIComponent(phone)}`;
-            }, 1000);
-        } else {
-            msgEl.style.color = 'red';
-            msgEl.textContent = '❌ Registration failed!';
-        }
-
-    } catch(err){
-        console.error(err);
-        msgEl.style.color = 'red';
-        msgEl.textContent = '❌ Network error!';
-    }
-});
-</script>
+<footer>
+  <p>Made with ❤️ in India</p>
+</footer>
 
 </body>
 </html>

@@ -1,75 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnityPass Registration</title>
-<link rel="stylesheet" href="style.css">
-<script src="js/qrcode.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>UnityPass Registration</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
 <header>
-  <div class="logo-container">
-    <div class="logo-circle">
-      <div id="logo-qr-register"></div>
-    </div>
-    <div class="logo-text">UNITYPASS</div>
-    <div class="logo-slogan">One Skill. One Identity</div>
-  </div>
+  <img src="images/Unitypass.png" alt="UnityPass Logo" class="logo">
+  <h1>UnityPass Registration</h1>
 </header>
 
-<main>
-  <form id="registrationForm">
-    <input type="text" id="name" placeholder="Full Name" required><br>
-    <input type="text" id="skill" placeholder="Skill" required><br>
-    <input type="text" id="phone" placeholder="Phone Number" required><br>
-    <input type="text" id="location" placeholder="Location" required><br>
+<section class="register-form">
+  <form id="regForm">
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="text" id="skill" placeholder="Skill" required>
+    <input type="text" id="phone" placeholder="Phone Number" required>
+    <input type="text" id="location" placeholder="Location" required>
     <button type="submit">Register</button>
-    <p id="message"></p>
   </form>
-</main>
+  <p id="regMsg"></p>
+</section>
 
 <script>
-new QRCode(document.getElementById("logo-qr-register"), {
-    text: "UNITYPASS Official Logo",
-    width: 100,
-    height: 100,
-    colorDark: "#ff3d3d",
-    colorLight: "#fff",
-    correctLevel: QRCode.CorrectLevel.H
-});
-
-const form = document.getElementById('registrationForm');
-const message = document.getElementById('message');
+const API_URL = 'https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe';
+const form = document.getElementById('regForm');
+const msg = document.getElementById('regMsg');
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const worker = {
+
+  const newUser = {
     Name: document.getElementById('name').value.trim(),
     Skill: document.getElementById('skill').value.trim(),
     Phone: document.getElementById('phone').value.trim(),
     Location: document.getElementById('location').value.trim()
   };
-  try {
-    const res = await fetch('https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe', {
-      method: 'POST',
-      headers: {'Content-Type':'application/json'},
-      body: JSON.stringify(worker)
-    });
-    if(res.ok){
-      message.style.color = 'green';
-      message.textContent = '✅ Worker registered successfully!';
-      form.reset();
-    } else {
-      message.style.color = 'red';
-      message.textContent = '❌ Error registering worker';
-    }
-  } catch(err){
-    message.style.color = 'red';
-    message.textContent = '❌ Network error';
-    console.error(err);
+
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(newUser)
+  });
+
+  if (res.ok) {
+    msg.style.color = 'green';
+    msg.textContent = '✅ Registered Successfully! Redirecting...';
+    setTimeout(() => {
+      window.location.href = `profile.html?phone=${newUser.Phone}`;
+    }, 1500);
+  } else {
+    msg.style.color = 'red';
+    msg.textContent = '❌ Failed to register. Try again.';
   }
 });
 </script>
+
 </body>
 </html>
