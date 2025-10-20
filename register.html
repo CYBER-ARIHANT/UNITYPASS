@@ -1,34 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UnityPass - Register</title>
-<link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register - UnityPass</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<nav>
-    <img src="Unitypass.jpg" alt="UnityPass Logo" class="logo">
+  <nav>
+    <img src="Unitypass.jpg" alt="Logo" class="logo">
     <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="register.html">Register</a></li>
-        <li><a href="profile.html">Profile</a></li>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="register.html" class="active">Register</a></li>
+      <li><a href="profile.html">Profile</a></li>
     </ul>
-</nav>
+  </nav>
 
-<main>
-    <h2 class="fadeSlide">Register Your Skills</h2>
-    <form id="registerForm" class="fadeSlideDelay">
-        <input type="text" id="name" placeholder="Name" required>
-        <input type="text" id="skill" placeholder="Skill" required>
-        <input type="tel" id="phone" placeholder="9876543210" required pattern="[0-9]{10}" maxlength="10">
-        <input type="text" id="location" placeholder="Location" required>
-        <button type="submit">Register</button>
+  <section class="form-section">
+    <h2>Create Your Digital ID 🪪</h2>
+    <form id="registerForm">
+      <input type="text" id="name" placeholder="Full Name" required>
+      <input type="text" id="skill" placeholder="Skill" required>
+      <input type="tel" id="phone" placeholder="9876543210" maxlength="10" required>
+      <input type="text" id="location" placeholder="Location" required>
+      <button type="submit" class="btn">Register</button>
     </form>
-    <p id="message"></p>
-</main>
+  </section>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>

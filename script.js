@@ -1,27 +1,19 @@
-// Google Sheet API URL
 const sheetUrl = "https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe";
 
-/* ---------------- Registration ---------------- */
-document.getElementById('registerForm')?.addEventListener('submit', async function(e){
+/* --- Registration --- */
+document.getElementById('registerForm')?.addEventListener('submit', async (e) => {
     e.preventDefault();
-
     const name = document.getElementById('name').value.trim();
     const skill = document.getElementById('skill').value.trim();
     const phone = document.getElementById('phone').value.trim();
     const location = document.getElementById('location').value.trim();
 
-    // Validate phone: exactly 10 digits
     if(!/^\d{10}$/.test(phone)){
         alert("Phone number must be exactly 10 digits.");
         return;
     }
 
-    const data = {
-        NAME: name,
-        SKILL: skill,
-        PHONE: phone,
-        LOCATION: location
-    };
+    const data = { NAME: name, SKILL: skill, PHONE: phone, LOCATION: location };
 
     try {
         const res = await fetch(sheetUrl, {
@@ -30,68 +22,84 @@ document.getElementById('registerForm')?.addEventListener('submit', async functi
             body: JSON.stringify(data)
         });
 
-        if(!res.ok) throw new Error("Failed to register");
+        if(!res.ok) throw new Error("Failed");
 
-        const response = await res.json();
-        console.log("SheetBest response:", response);
-
-        // Save profile locally
         localStorage.setItem('profile', JSON.stringify(data));
-
         alert("Registration successful!");
         window.location.href = "profile.html";
     } catch(err) {
         console.error(err);
-        alert("Registration failed. Check Sheet URL and column names.");
+        alert("Registration failed. Check Sheet URL.");
     }
 });
 
-/* ---------------- Profile Page ---------------- */
+/* --- Profile Page --- */
 window.addEventListener('DOMContentLoaded', () => {
     const profile = JSON.parse(localStorage.getItem('profile') || '{}');
     if(!profile.NAME) return;
 
-    // Display profile info
     document.getElementById('pName').innerText = profile.NAME;
     document.getElementById('pSkill').innerText = profile.SKILL;
     document.getElementById('pPhone').innerText = profile.PHONE;
     document.getElementById('pLocation').innerText = profile.LOCATION;
 
-    // Generate QR code
     const qr = new QRious({
         element: document.getElementById('qrCode'),
         value: `Name: ${profile.NAME}\nSkill: ${profile.SKILL}\nPhone: ${profile.PHONE}\nLocation: ${profile.LOCATION}`,
         size: 200
     });
 
-    // QR bounce on click
-    const qrCanvas = document.getElementById('qrCode');
-    qrCanvas.addEventListener('click', () => {
-        qrCanvas.style.transform = "scale(1.2)";
-        setTimeout(() => { qrCanvas.style.transform = "scale(1.1)"; }, 200);
-    });
-
-    // PDF download
-    document.getElementById('downloadPdf').addEventListener('click', () => {
+    /* --- PDF with Logo --- */
+    document.getElementById('downloadPdf')?.addEventListener('click', () => {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
-        doc.setFontSize(16);
-        doc.text("UnityPass Profile", 20, 20);
-        doc.setFontSize(12);
-        doc.text(`Name: ${profile.NAME}`, 20, 40);
-        doc.text(`Skill: ${profile.SKILL}`, 20, 50);
-        doc.text(`Phone: ${profile.PHONE}`, 20, 60);
-        doc.text(`Location: ${profile.LOCATION}`, 20, 70);
-        doc.addImage(document.getElementById('qrCode').toDataURL("image/png"), 'PNG', 20, 80, 50, 50);
-        doc.save('UnityPass_Profile.pdf');
+        const pageWidth = doc.internal.pageSize.getWidth();
+
+        const cardX = 15, cardY = 20, cardWidth = pageWidth - 30, cardHeight = 150;
+
+        doc.setFillColor(255, 248, 240);
+        doc.roundedRect(cardX, cardY, cardWidth, cardHeight, 10, 10, 'F');
+
+        doc.setDrawColor(255, 140, 0);
+        doc.setLineWidth(2);
+        doc.roundedRect(cardX, cardY, cardWidth, cardHeight, 10, 10, 'S');
+
+        const img = new Image();
+        img.src = 'Unitypass.jpg';
+        img.onload = function() {
+            const logoW = 60, logoH = 25;
+            const centerX = (pageWidth - logoW) / 2;
+            doc.addImage(img, 'JPEG', centerX, cardY + 10, logoW, logoH);
+
+            doc.setFontSize(18);
+            doc.setFont("helvetica", "bold");
+            doc.setTextColor(255, 140, 0);
+            doc.text("UNITYPASS ID CARD", pageWidth / 2, cardY + 50, { align: "center" });
+
+            doc.setFontSize(12);
+            doc.setTextColor(0, 0, 0);
+            doc.text(`Name: ${profile.NAME}`, cardX + 20, cardY + 70);
+            doc.text(`Skill: ${profile.SKILL}`, cardX + 20, cardY + 85);
+            doc.text(`Phone: ${profile.PHONE}`, cardX + 20, cardY + 100);
+            doc.text(`Location: ${profile.LOCATION}`, cardX + 20, cardY + 115);
+
+            const qrData = document.getElementById('qrCode').toDataURL("image/png");
+            doc.addImage(qrData, 'PNG', pageWidth - 70, cardY + 70, 45, 45);
+
+            doc.setFontSize(10);
+            doc.setTextColor(120, 120, 120);
+            doc.text("Generated by UnityPass", pageWidth / 2, cardY + cardHeight - 10, { align: "center" });
+
+            doc.save('UnityPass_Profile.pdf');
+        };
     });
 
-    // Delete profile
+    /* --- Delete Profile --- */
     document.getElementById('deleteProfile')?.addEventListener('click', async () => {
         if(confirm("Are you sure you want to delete your profile?")){
             if(profile.PHONE){
                 try {
-                    await fetch(`https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe/PHONE/${profile.PHONE}`, { method: 'DELETE' });
+                    await fetch(`${sheetUrl}/PHONE/${profile.PHONE}`, { method: 'DELETE' });
                 } catch(e){ console.log("Failed to delete from sheet"); }
             }
             localStorage.removeItem('profile');
