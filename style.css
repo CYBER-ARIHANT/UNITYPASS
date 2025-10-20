@@ -1,36 +1,91 @@
-body { margin:0; font-family:'Poppins',sans-serif; background:linear-gradient(to bottom right,#e0f7fa,#b2ebf2); color:#333; }
-h1 { font-weight:800; color:#00796b; text-align:center; margin-bottom:20px; animation: fadeInDown 1s ease forwards; }
-p { font-size:16px; text-align:center; animation: fadeIn 1.2s ease forwards; }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    color: #333;
+}
 
-.navbar { display:flex; justify-content:space-between; align-items:center; background:#00796b; padding:15px 30px; box-shadow:0 4px 8px rgba(0,0,0,0.2); position:sticky; top:0; z-index:100; animation: slideDown 1s ease forwards;}
-.logo-img { height:55px; border-radius:10px; transition: transform 0.3s ease; }
-.logo-img:hover { transform: scale(1.1); }
-.nav-links { list-style:none; display:flex; gap:25px; }
-.nav-links li a { text-decoration:none; color:white; font-weight:bold; transition: color 0.3s, transform 0.3s; }
-.nav-links li a:hover, .nav-links li a.active { color:#ffeb3b; transform:scale(1.1); }
-.hamburger { display:none; flex-direction:column; cursor:pointer; gap:5px; }
-.hamburger span { height:3px; width:30px; background:white; border-radius:2px; }
+nav {
+    background: #007BFF;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+}
 
-.banner { text-align:center; margin:25px 0; animation: fadeIn 1.5s ease forwards; }
-.banner-img { max-width:80%; height:auto; border-radius:15px; box-shadow:0 8px 20px rgba(0,0,0,0.3); transition: transform 0.5s ease; }
-.banner-img:hover { transform: scale(1.05); }
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
 
-.container { padding:30px 20px; max-width:900px; margin:auto; }
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
 
-form input { width:100%; padding:12px; margin:8px 0; font-weight:bold; border:2px solid #00796b; border-radius:8px; transition: transform 0.3s, border-color 0.3s; }
-form input:focus { outline:none; border-color:#ffeb3b; transform:scale(1.02); }
+.logo {
+    height: 50px;
+}
 
-button { background:#00796b; color:white; font-weight:bold; padding:12px 25px; margin-top:10px; border:none; border-radius:8px; cursor:pointer; transition: background 0.3s, transform 0.3s, box-shadow 0.3s; }
-button:hover { background:#004d40; transform:scale(1.1); box-shadow:0 8px 20px rgba(0,0,0,0.3); }
+header {
+    text-align: center;
+    padding: 50px 20px;
+    background: #e2f0ff;
+}
 
-#profile-card { background:#ffffff; padding:25px; border-radius:15px; box-shadow:0 8px 20px rgba(0,0,0,0.2); animation: fadeInUp 1s ease forwards; }
-#qrcode { margin:20px auto; }
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
 
-/* Animations */
-@keyframes fadeIn {0%{opacity:0; transform:translateY(20px);} 100%{opacity:1; transform:translateY(0);}}
-@keyframes fadeInDown {0%{opacity:0; transform:translateY(-50px);} 100%{opacity:1; transform:translateY(0);}}
-@keyframes fadeInUp {0%{opacity:0; transform:translateY(50px);} 100%{opacity:1; transform:translateY(0);}}
-@keyframes slideDown {0%{opacity:0; transform:translateY(-50px);} 100%{opacity:1; transform:translateY(0);}}
-@keyframes pulse {0%{transform:scale(1);} 100%{transform:scale(1.05);}}
+header .btn {
+    padding: 10px 20px;
+    background: #007BFF;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+}
 
-@media(max-width:768px){ .nav-links{position:absolute; right:0; top:65px; background-color:#00796b; flex-direction:column; width:100%; display:none;} .nav-links.active{display:flex;} .hamburger{display:flex;} }
+main {
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    border-radius: 10px;
+    margin-top: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+form button {
+    padding: 10px 20px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+button:hover, .btn:hover {
+    opacity: 0.9;
+}
+
+#qrCode {
+    margin-top: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}

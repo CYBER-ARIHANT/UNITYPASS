@@ -1,44 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UnityPass - Register</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnityPass - Register</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="navbar">
-    <div class="logo"><img src="image/Unitypass.jpg" alt="UnityPass Logo" class="logo-img"></div>
-    <ul class="nav-links">
-      <li><a href="index.html" class="nav-link" id="home-link">Home</a></li>
-      <li><a href="register.html" class="nav-link" id="register-link">Register</a></li>
-      <li><a href="profile.html" class="nav-link" id="profile-link">Profile</a></li>
-    </ul>
-    <div class="hamburger"><span></span><span></span><span></span></div>
-  </nav>
+    <nav>
+        <img src="Unitypass.jpg" alt="UnityPass Logo" class="logo">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="register.html">Register</a></li>
+            <li><a href="profile.html">Profile</a></li>
+        </ul>
+    </nav>
 
-  <div class="container">
-    <h1 class="fadeInDown">Register Your UnityPass</h1>
-    <form id="register-form">
-      <label>Name:</label><br>
-      <input type="text" id="name" required><br><br>
+    <main>
+        <h2>Register Your Skills</h2>
+        <form id="registerForm">
+            <input type="text" id="name" placeholder="Name" required>
+            <input type="text" id="skill" placeholder="Skill" required>
+            <input type="tel" id="phone" placeholder="9876543210" required pattern="[0-9]{10}" maxlength="10">
+            <input type="text" id="location" placeholder="Location" required>
+            <button type="submit">Register</button>
+        </form>
+        <p id="message"></p>
+    </main>
 
-      <label>Phone Number:</label><br>
-      <input type="text" id="phone" placeholder="e.g., 8368817282" required><br><br>
-
-      <label>Skills:</label><br>
-      <input type="text" id="skills" placeholder="e.g., Electrician, Painter"><br><br>
-
-      <label>Location:</label><br>
-      <input type="text" id="location" placeholder="City, State"><br><br>
-
-      <button type="submit">Register</button>
-    </form>
-    <p id="register-msg"></p>
-  </div>
-
-  <script src="js/qrcode.min.js"></script>
-  <script src="js/jspdf.umd.min.js"></script>
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
