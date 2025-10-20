@@ -24,15 +24,15 @@
     <h2>Your <span style="color:#ff6600;">Profile</span></h2>
 
     <!-- Profile Info -->
-    <div id="profileInfo">
+    <section id="profileInfo" class="fade-in">
         <p><strong>Name:</strong> <span id="pName"></span></p>
         <p><strong>Skill:</strong> <span id="pSkill"></span></p>
         <p><strong>Phone:</strong> <span id="pPhone"></span></p>
         <p><strong>Location:</strong> <span id="pLocation"></span></p>
-    </div>
+    </section>
 
     <!-- About Us -->
-    <div id="aboutUs">
+    <section id="aboutUs" class="fade-in">
         <h3>About Us</h3>
         <p>
             We are a team of students from class 9 — Arihant Jha, Aarav Arora, and Prisha Jain. 
@@ -40,10 +40,10 @@
             for unskilled and semi-skilled laborers, providing them with a platform to 
             showcase their skills and connect with potential employers.
         </p>
-    </div>
+    </section>
 
     <!-- About UnityPass -->
-    <div id="aboutUnityPass">
+    <section id="aboutUnityPass" class="fade-in">
         <h3>About UnityPass</h3>
         <p>
             UnityPass is a digital skill ID card designed to help individuals document and 
@@ -53,14 +53,16 @@
             helping unskilled and semi-skilled workers gain access to employment opportunities 
             and skill development programs efficiently and securely.
         </p>
-    </div>
+    </section>
 
     <!-- QR Code and Buttons -->
-    <canvas id="qrCode"></canvas>
-    <div class="buttons">
-        <button id="downloadPdf" class="btn">Download PDF</button>
-        <button id="deleteProfile" class="btn danger">Delete Profile</button>
-    </div>
+    <section class="fade-in" style="text-align:center; margin-top:20px;">
+        <canvas id="qrCode"></canvas>
+        <div class="buttons">
+            <button id="downloadPdf" class="btn">Download PDF</button>
+            <button id="deleteProfile" class="btn danger">Delete Profile</button>
+        </div>
+    </section>
 </main>
 
 <script src="script.js"></script>
