@@ -28,6 +28,47 @@
     <p id="message"></p>
   </section>
 
-  <script src="script.js"></script>
+  <script>
+    const sheetUrl = "https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe";
+
+    document.getElementById('registerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('name').value.trim();
+      const skill = document.getElementById('skill').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const location = document.getElementById('location').value.trim();
+      const msg = document.getElementById('message');
+
+      // ✅ validation
+      if (phone.length !== 10) {
+        msg.innerText = "Phone number must be exactly 10 digits!";
+        msg.style.color = "red";
+        return;
+      }
+
+      const data = { NAME: name, SKILL: skill, PHONE: phone, LOCATION: location };
+
+      try {
+        const res = await fetch(sheetUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data)
+        });
+
+        if (!res.ok) throw new Error("Failed to register");
+
+        msg.innerText = "✅ Registration successful!";
+        msg.style.color = "green";
+
+        localStorage.setItem('profile', JSON.stringify(data));
+
+        setTimeout(() => window.location.href = "profile.html", 1000);
+      } catch (err) {
+        console.error(err);
+        msg.innerText = "❌ Registration failed. Check SheetBest URL & columns.";
+        msg.style.color = "red";
+      }
+    });
+  </script>
 </body>
 </html>
