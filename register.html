@@ -16,15 +16,16 @@
     </ul>
   </nav>
 
-  <section class="form-section">
-    <h2>Create Your Digital ID 🪪</h2>
+  <section class="form-section fade-in">
+    <h2>Register Your Skills</h2>
     <form id="registerForm">
       <input type="text" id="name" placeholder="Full Name" required>
       <input type="text" id="skill" placeholder="Skill" required>
-      <input type="tel" id="phone" placeholder="9876543210" maxlength="10" required>
+      <input type="tel" id="phone" placeholder="Phone (10 digits)" required maxlength="10" pattern="[0-9]{10}">
       <input type="text" id="location" placeholder="Location" required>
       <button type="submit" class="btn">Register</button>
     </form>
+    <p id="message"></p>
   </section>
 
   <script src="script.js"></script>
