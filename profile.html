@@ -1,36 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UnityPass - Profile</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnityPass - Profile</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
 </head>
 <body>
-    <nav>
-        <img src="Unitypass.jpg" alt="UnityPass Logo" class="logo">
-        <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="register.html">Register</a></li>
-            <li><a href="profile.html">Profile</a></li>
-        </ul>
-    </nav>
+<nav>
+    <img src="Unitypass.jpg" alt="UnityPass Logo" class="logo">
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="register.html">Register</a></li>
+        <li><a href="profile.html">Profile</a></li>
+    </ul>
+</nav>
 
-    <main>
-        <h2>Your Profile</h2>
-        <div id="profileInfo">
-            <p><strong>Name:</strong> <span id="pName"></span></p>
-            <p><strong>Skill:</strong> <span id="pSkill"></span></p>
-            <p><strong>Phone:</strong> <span id="pPhone"></span></p>
-            <p><strong>Location:</strong> <span id="pLocation"></span></p>
-        </div>
-        <canvas id="qrCode"></canvas>
-        <button id="downloadPdf">Download PDF</button>
-    </main>
+<main>
+    <h2>Your <span style="color:#ff6600;">Profile</span></h2>
+    <div id="profileInfo">
+        <p><strong>Name:</strong> <span id="pName"></span></p>
+        <p><strong>Skill:</strong> <span id="pSkill"></span></p>
+        <p><strong>Phone:</strong> <span id="pPhone"></span></p>
+        <p><strong>Location:</strong> <span id="pLocation"></span></p>
+    </div>
+    <canvas id="qrCode"></canvas>
+    <button id="downloadPdf">Download PDF</button>
+    <button id="deleteProfile">Delete Profile</button>
+</main>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
