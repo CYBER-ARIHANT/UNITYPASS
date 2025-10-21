@@ -22,51 +22,53 @@
 
 <main>
     <h2>Your <span style="color:#ff6600;">Profile</span></h2>
+    <div id="profileInfo">
+        <p><strong>Name:</strong> <span id="pName"></span></p>
+        <p><strong>Skill:</strong> <span id="pSkill"></span></p>
+        <p><strong>Phone:</strong> <span id="pPhone"></span></p>
+        <p><strong>Location:</strong> <span id="pLocation"></span></p>
+    </div>
+    <canvas id="qrCode"></canvas>
 
-    <!-- Profile Info -->
-    <section id="profileInfo" class="fade-in"></section>
-
-    <!-- Search Bar -->
-    <section id="searchSection" class="fade-in" style="text-align:center; margin: 20px 0;">
-        <input type="text" id="searchInput" placeholder="Search by Name, Skill, or Location" style="padding:10px; width:70%; max-width:400px; border-radius:6px; border:1px solid #ccc;">
-    </section>
-
-    <!-- Search Results -->
-    <section id="searchResults" class="fade-in" style="max-width:700px; margin: 20px auto;"></section>
-
-    <!-- About Us -->
-    <section id="aboutUs" class="fade-in">
-        <h3>About Us</h3>
-        <p>
-            We are a team of students from class 9 — Arihant Jha, Aarav Arora, and Prisha Jain. 
-            We created this website to facilitate employment and empowerment opportunities 
-            for unskilled and semi-skilled laborers, providing them with a platform to 
-            showcase their skills and connect with potential employers.
-        </p>
-    </section>
-
-    <!-- About UnityPass -->
-    <section id="aboutUnityPass" class="fade-in">
-        <h3>About UnityPass</h3>
-        <p>
-            UnityPass is a digital skill ID card designed to help individuals document and 
-            showcase their skills in a professional manner. By registering on UnityPass, 
-            users can create a digital profile containing their personal details, skills, 
-            and location. This profile can be shared with employers or training providers, 
-            helping unskilled and semi-skilled workers gain access to employment opportunities 
-            and skill development programs efficiently and securely.
-        </p>
-    </section>
-
-    <!-- QR Code and Buttons -->
-    <section class="fade-in" style="text-align:center; margin-top:20px;">
-        <canvas id="qrCode"></canvas>
-        <div class="buttons">
-            <button id="downloadPdf" class="btn">Download PDF</button>
-            <button id="deleteProfile" class="btn danger">Delete Profile</button>
-        </div>
-    </section>
+    <div class="buttons">
+        <button id="downloadPdf" class="btn">Download PDF</button>
+        <button id="deleteProfile" class="btn danger">Delete Profile</button>
+    </div>
 </main>
+
+<!-- About UnityPass Section -->
+<section id="aboutUnityPass" class="fade-in">
+  <h3>About UnityPass</h3>
+  <p>
+    UnityPass is a digital identification and empowerment platform that helps unskilled 
+    and semi-skilled workers showcase their talents in an organized way. Through a 
+    digital profile and QR-based skill ID, it connects individuals to employment, 
+    training, and recognition opportunities.
+  </p>
+  <p>
+    With UnityPass, users can register their information securely, generate a professional 
+    profile, and download it as a digital ID to share with potential employers or 
+    organizations.
+  </p>
+</section>
+
+<!-- About Us Section -->
+<section id="aboutUs" class="fade-in">
+  <h3>About Us</h3>
+  <p>
+    Our team — <strong>Arihant Jha</strong>, <strong>Aarav Arora</strong>, 
+    <strong>Prisha Jain</strong>, and <strong>Shreyasee Raipal</strong> — are 
+    students of Class 9 who have collaboratively developed <strong>UnityPass</strong>. 
+    This project aims to promote <strong>employment and empowerment</strong> among 
+    unskilled and semi-skilled workers by providing them with a simple, digital platform 
+    to register, showcase, and verify their skills.
+  </p>
+  <p>
+    Through UnityPass, we aspire to bridge the gap between opportunity and talent, 
+    helping workers gain recognition for their abilities and enabling easier access 
+    to job and training opportunities.
+  </p>
+</section>
 
 <script src="script.js"></script>
 </body>
