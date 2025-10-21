@@ -5,13 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>UnityPass</title>
 <link rel="stylesheet" href="style.css">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-
-<!-- Navigation -->
 <nav>
-  <img src="Unitypass.jpg" class="logo">
+  <img src="Unitypass.jpg" class="logo" alt="UnityPass Logo">
   <ul>
     <li><a href="index.html" class="active">Home</a></li>
     <li><a href="register.html">Register</a></li>
@@ -19,25 +16,55 @@
   </ul>
 </nav>
 
-<!-- Hero Section -->
+<!-- Home Section -->
 <section class="home fade-in">
   <h1>Welcome to <span>UnityPass</span></h1>
-  <p>Create your digital skill ID card — simple, fast & free.</p>
+  <p>Create your digital skill ID card — Simple, Fast & Free.</p>
   <a href="register.html" class="btn">Register Now</a>
 </section>
 
-<!-- About UnityPass -->
-<section id="homeAbout" class="fade-in">
-  <div class="content-container">
-    <h2>What is <span>UnityPass</span>?</h2>
-    <p>
-      UnityPass is a digital skill ID card designed to help individuals showcase their skills professionally. 
-      By registering on UnityPass, users can create a digital profile containing personal details, skills, and location. 
-      This profile can be shared with employers or training providers, empowering unskilled and semi-skilled workers 
-      to access better employment opportunities efficiently.
-    </p>
-  </div>
+<!-- Search Bar -->
+<section id="searchSection">
+  <h2>Find Registered Profiles</h2>
+  <input type="text" id="searchInput" placeholder="Search by Name, Skill, or Location...">
+  <div id="searchResults"></div>
 </section>
 
+<!-- About UnityPass -->
+<section id="aboutUnityPass" class="fade-in">
+  <h3>About UnityPass</h3>
+  <p>
+    UnityPass is a digital identification and empowerment initiative designed 
+    to help unskilled and semi-skilled workers showcase their abilities through 
+    a verified online skill ID. It enables individuals to register their skills, 
+    generate a QR-based digital card, and share it with potential employers, 
+    helping bridge the gap between opportunity and talent.
+  </p>
+  <p>
+    Anyone can use UnityPass to store their professional details securely and 
+    present them digitally — promoting transparency, recognition, and easy access 
+    to job and training opportunities.
+  </p>
+</section>
+
+<!-- About Us -->
+<section id="aboutUs" class="fade-in">
+  <h3>About Us</h3>
+  <p>
+    Our team — <strong>Arihant Jha</strong>, <strong>Aarav Arora</strong>, 
+    <strong>Prisha Jain</strong>, and <strong>Shreyasee Raipal</strong> — are 
+    students of Class 9 who have collaboratively developed <strong>UnityPass</strong>. 
+    This project aims to promote <strong>employment and empowerment</strong> among 
+    unskilled and semi-skilled workers by providing them with a simple, digital platform 
+    to register, showcase, and verify their skills.
+  </p>
+  <p>
+    Through UnityPass, we aspire to bridge the gap between opportunity and talent, 
+    helping workers gain recognition for their abilities and enabling easier access 
+    to job and training opportunities.
+  </p>
+</section>
+
+<script src="script.js"></script>
 </body>
 </html>
