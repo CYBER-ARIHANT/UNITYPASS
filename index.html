@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UnityPass - Empowering Unskilled Labour</title>
+  <title>UnityPass</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav>
-    <img src="images/Unitypass.jpg" class="logo">
+  <nav class="fade-down">
+    <img src="images/Unitypass.jpg" alt="UnityPass Logo" class="logo">
     <ul>
       <li><a href="index.html" class="active">Home</a></li>
       <li><a href="register.html">Register</a></li>
@@ -18,30 +18,32 @@
 
   <section class="hero fade-in">
     <h1>Welcome to <span>UnityPass</span></h1>
-    <p>Bridging the gap between skills and opportunities for unskilled workers.</p>
+    <p>Create your digital skill ID card — Simple, Fast & Free.</p>
+    <a href="register.html" class="btn">Register Now</a>
   </section>
 
-  <section class="search-section fade-in">
-    <h2>Search Skilled Workers</h2>
-    <input type="text" id="searchInput" placeholder="Search by name, skill, or location">
-    <div id="searchResults" class="results"></div>
+  <section id="searchSection" class="fade-in">
+    <h2>Find Registered Profiles</h2>
+    <input type="text" id="searchInput" placeholder="Search by Name, Skill, or Location...">
+    <div id="searchResults"></div>
   </section>
 
-  <section class="about-section fade-in">
-    <h2>About UnityPass</h2>
-    <p><strong>UnityPass</strong> is a digital platform that allows unskilled and semi-skilled workers to create verified profiles showcasing their abilities. 
-    Each profile includes a unique QR code and downloadable ID card, helping workers get recognized and hired easily.</p>
+  <footer class="fade-up">
+    <h3>About UnityPass</h3>
+    <p>
+      UnityPass is a digital platform that allows unskilled and semi-skilled workers 
+      to create verified profiles showcasing their abilities. Each profile includes 
+      a unique QR code and downloadable ID card, helping workers get recognized and hired easily.
+    </p>
     <p><strong>How it works:</strong> Register your skill → Generate your profile → Share your QR for instant verification.</p>
-  </section>
 
-  <section class="team-section fade-in">
-    <h2>About Us</h2>
-    <p>Our team — <strong>Arihant Jha</strong>, <strong>Aarav Arora</strong>, <strong>Prisha Jain</strong>, and <strong>Shreyasee Raipal</strong> — 
-    are students of Class 9 who developed this website to promote employment and empowerment for unskilled labour in our community.</p>
-  </section>
-
-  <footer>
-    <p>© 2025 UnityPass | Created with ❤️ by Team UnityPass</p>
+    <h3>About Us</h3>
+    <p>
+      Our team — <strong>Arihant Jha</strong>, <strong>Aarav Arora</strong>, <strong>Prisha Jain</strong>, 
+      and <strong>Shreyasee Raipal</strong> — are students of Class 9 who developed this website 
+      to promote employment and empowerment for unskilled labour in our community.
+    </p>
+    <p class="credit">© 2025 UnityPass | Created with ❤️ by Team UnityPass</p>
   </footer>
 
   <script src="script.js"></script>

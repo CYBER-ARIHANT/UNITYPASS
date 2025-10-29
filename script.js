@@ -1,4 +1,4 @@
-// ✅ Google Sheet API URL
+// Google Sheet API
 const sheetUrl = "https://api.sheetbest.com/sheets/6370568b-e4ec-43f3-b14d-13875e2b5bfe";
 
 /* ---------------- Registration ---------------- */
@@ -31,7 +31,7 @@ document.getElementById('registerForm')?.addEventListener('submit', async (e) =>
     window.location.href = "profile.html";
   } catch (err) {
     console.error(err);
-    alert("Registration failed. Check Sheet URL and column names.");
+    alert("Registration failed. Please check Sheet URL or column names.");
   }
 });
 
@@ -42,21 +42,34 @@ window.addEventListener('DOMContentLoaded', () => {
 
   if (profile.NAME && profileInfo) {
     profileInfo.innerHTML = `
-      <p><strong>Name:</strong> ${profile.NAME}</p>
-      <p><strong>Skill:</strong> ${profile.SKILL}</p>
-      <p><strong>Phone:</strong> ${profile.PHONE}</p>
-      <p><strong>Location:</strong> ${profile.LOCATION}</p>
+      <div class="profile-card fade-in">
+        <img src="images/avatar.png" class="avatar" alt="Avatar">
+        <div>
+          <p><strong>Name:</strong> ${profile.NAME}</p>
+          <p><strong>Skill:</strong> ${profile.SKILL}</p>
+          <p><strong>Phone:</strong> ${profile.PHONE}</p>
+          <p><strong>Location:</strong> ${profile.LOCATION}</p>
+        </div>
+      </div>
     `;
 
-    // ✅ QR Code Generation
+    // QR Code Generation
     const qrContainer = document.getElementById("qrCode");
+    qrContainer.innerHTML = "";
     new QRCode(qrContainer, {
       text: `Name: ${profile.NAME}\nSkill: ${profile.SKILL}\nPhone: ${profile.PHONE}\nLocation: ${profile.LOCATION}`,
       width: 200,
       height: 200
     });
 
-    // ✅ Download PDF
+    // Small bounce animation on QR load
+    setTimeout(() => {
+      qrContainer.style.transition = "transform 0.3s ease";
+      qrContainer.style.transform = "scale(1.1)";
+      setTimeout(() => { qrContainer.style.transform = "scale(1)"; }, 300);
+    }, 400);
+
+    // PDF Download
     document.getElementById('downloadPdf').addEventListener('click', () => {
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
@@ -77,7 +90,7 @@ window.addEventListener('DOMContentLoaded', () => {
       doc.save('UnityPass_Profile.pdf');
     });
 
-    // ✅ Delete Profile
+    // Delete Profile
     document.getElementById('deleteProfile').addEventListener('click', () => {
       if (confirm("Are you sure you want to delete your profile?")) {
         localStorage.removeItem('profile');
@@ -86,10 +99,12 @@ window.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+  } else if (profileInfo) {
+    profileInfo.innerHTML = "<p>No profile found. Please register first.</p>";
   }
 });
 
-/* ---------------- Search Functionality ---------------- */
+/* ---------------- Search Feature ---------------- */
 const searchInput = document.getElementById('searchInput');
 const searchResults = document.getElementById('searchResults');
 
@@ -114,15 +129,13 @@ if (searchInput) {
         searchResults.innerHTML = '<p>No matching results found.</p>';
       } else {
         searchResults.innerHTML = filtered.map(p => `
-          <div class="profile-card">
-            <div style="display:flex; align-items:center; gap:15px;">
-              <img src="images/avatar.png" class="avatar" alt="Avatar">
-              <div>
-                <p><strong>Name:</strong> ${p.NAME}</p>
-                <p><strong>Skill:</strong> ${p.SKILL}</p>
-                <p><strong>Phone:</strong> ${p.PHONE}</p>
-                <p><strong>Location:</strong> ${p.LOCATION}</p>
-              </div>
+          <div class="profile-card fade-in">
+            <img src="images/avatar.png" class="avatar" alt="Avatar">
+            <div>
+              <p><strong>Name:</strong> ${p.NAME}</p>
+              <p><strong>Skill:</strong> ${p.SKILL}</p>
+              <p><strong>Phone:</strong> ${p.PHONE}</p>
+              <p><strong>Location:</strong> ${p.LOCATION}</p>
             </div>
           </div>
         `).join('');

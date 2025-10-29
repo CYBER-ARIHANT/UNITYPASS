@@ -8,14 +8,17 @@
 body {
   background: #f9fafc;
   color: #222;
+  overflow-x: hidden;
 }
 
+/* ----- Navbar ----- */
 nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background: #004aad;
   padding: 10px 30px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
 }
 
 .logo {
@@ -33,67 +36,80 @@ nav a {
   text-decoration: none;
   color: white;
   font-weight: 500;
+  transition: 0.3s;
 }
 
 nav a.active, nav a:hover {
-  text-decoration: underline;
+  color: #ffd700;
+  transform: scale(1.1);
 }
 
+/* ----- Hero ----- */
 .hero {
   text-align: center;
-  padding: 50px 20px;
-  background: #e8f0ff;
+  padding: 80px 20px;
+  background: linear-gradient(120deg, #004aad, #007bff);
+  color: white;
+  animation: bgShift 8s infinite alternate;
+}
+
+@keyframes bgShift {
+  0% { background: linear-gradient(120deg, #004aad, #007bff); }
+  100% { background: linear-gradient(120deg, #007bff, #004aad); }
 }
 
 .hero h1 {
-  font-size: 2.5rem;
-  color: #004aad;
+  font-size: 2.8rem;
+  margin-bottom: 15px;
 }
 
 .hero span {
-  color: #007bff;
+  color: #ffd700;
 }
 
-section {
-  padding: 40px 20px;
-  text-align: center;
-}
-
-input, button {
-  display: block;
-  width: 90%;
-  max-width: 400px;
-  margin: 10px auto;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 1rem;
-}
-
+/* ----- Buttons ----- */
 .btn {
   background: #004aad;
   color: white;
   border: none;
+  border-radius: 6px;
+  padding: 12px 25px;
+  font-weight: 600;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+  background: #007bff;
 }
 
 .btn.delete {
   background: #d9534f;
 }
 
-.btn:hover {
-  opacity: 0.9;
+/* ----- Form ----- */
+.form-section {
+  max-width: 400px;
+  margin: 50px auto;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
+/* ----- Profile Card ----- */
 .profile-card {
-  background: white;
+  background: #fff;
   border-radius: 10px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-  margin: 10px auto;
-  padding: 15px;
-  width: 90%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin: 20px auto;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
   max-width: 500px;
-  text-align: left;
 }
 
 .avatar {
@@ -102,23 +118,74 @@ input, button {
   border-radius: 50%;
 }
 
-.results {
-  margin-top: 20px;
+/* ----- Search ----- */
+#searchSection {
+  text-align: center;
+  margin: 40px auto;
 }
 
+#searchInput {
+  padding: 12px;
+  width: 80%;
+  max-width: 400px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+/* ----- Footer ----- */
 footer {
   background: #004aad;
   color: white;
+  padding: 40px 20px;
   text-align: center;
-  padding: 10px 0;
-  margin-top: 40px;
+  animation: fadeUp 1.5s ease;
 }
 
+footer h3 {
+  color: #ffd700;
+  margin: 15px 0 10px;
+}
+
+footer p {
+  max-width: 800px;
+  margin: 10px auto;
+  line-height: 1.6;
+}
+
+footer .credit {
+  margin-top: 20px;
+  font-weight: 600;
+  color: #fff;
+  font-size: 0.95rem;
+}
+
+/* ----- Animations ----- */
 .fade-in {
-  animation: fadeIn 1s ease-in;
+  animation: fadeIn 1.2s ease forwards;
+  opacity: 0;
+}
+
+.fade-up {
+  animation: fadeUp 1.5s ease forwards;
+  opacity: 0;
+}
+
+.fade-down {
+  animation: fadeDown 1s ease forwards;
+  opacity: 0;
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-40px); }
   to { opacity: 1; transform: translateY(0); }
 }
