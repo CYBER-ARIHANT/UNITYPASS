@@ -1,206 +1,124 @@
-/* ---------------- General ---------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
 body {
-    font-family: 'Poppins', 'Segoe UI', sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f6f7f9;
-    color: #333;
+  background: #f9fafc;
+  color: #222;
 }
 
-h2, h3 {
-    font-weight: 700;
-}
-
-.fade-in { 
-    opacity: 0; 
-    animation: fadeIn 1s ease forwards; 
-}
-
-@keyframes fadeIn { 
-    from { opacity: 0; transform: translateY(20px); } 
-    to { opacity: 1; transform: translateY(0); } 
-}
-
-/* ---------------- Navigation ---------------- */
 nav {
-    background: #222;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #004aad;
+  padding: 10px 30px;
 }
 
-.logo { 
-    height: 40px; 
-    transition: 0.3s ease; 
+.logo {
+  width: 120px;
+  border-radius: 8px;
 }
 
-nav ul { 
-    list-style: none; 
-    display: flex; 
-    gap: 20px; 
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
 }
 
-nav ul li a { 
-    color: white; 
-    text-decoration: none; 
-    font-weight: 600; 
+nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
 }
 
-nav ul li a:hover, nav ul li a.active { 
-    color: #ff8c00; 
+nav a.active, nav a:hover {
+  text-decoration: underline;
 }
 
-/* ---------------- Home ---------------- */
-.home { 
-    text-align: center; 
-    padding: 100px 20px; 
+.hero {
+  text-align: center;
+  padding: 50px 20px;
+  background: #e8f0ff;
 }
 
-.home h1 { 
-    font-size: 2.5rem; 
+.hero h1 {
+  font-size: 2.5rem;
+  color: #004aad;
 }
 
-.home h1 span { 
-    color: #ff6600; 
+.hero span {
+  color: #007bff;
 }
 
-/* ---------------- Buttons ---------------- */
-.btn { 
-    background: #ff6600; 
-    color: white; 
-    padding: 12px 25px; 
-    border: none; 
-    border-radius: 6px; 
-    font-weight: 600; 
-    cursor: pointer; 
-    transition: transform 0.2s ease; 
+section {
+  padding: 40px 20px;
+  text-align: center;
 }
 
-.btn:hover { 
-    transform: scale(1.05); 
+input, button {
+  display: block;
+  width: 90%;
+  max-width: 400px;
+  margin: 10px auto;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
 }
 
-.btn.danger { 
-    background: #d9534f; 
+.btn {
+  background: #004aad;
+  color: white;
+  border: none;
+  cursor: pointer;
 }
 
-/* ---------------- Form Section ---------------- */
-.form-section { 
-    max-width: 400px; 
-    margin: 50px auto; 
-    background: white; 
-    padding: 30px; 
-    border-radius: 10px; 
-    box-shadow: 0 0 10px #ddd; 
+.btn.delete {
+  background: #d9534f;
 }
 
-.form-section h2 { 
-    text-align: center; 
-    margin-bottom: 20px; 
+.btn:hover {
+  opacity: 0.9;
 }
 
-.form-section input { 
-    display: block; 
-    width: 100%; 
-    padding: 10px; 
-    margin-bottom: 15px; 
-    border: 1px solid #ccc; 
-    border-radius: 5px; 
+.profile-card {
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin: 10px auto;
+  padding: 15px;
+  width: 90%;
+  max-width: 500px;
+  text-align: left;
 }
 
-/* ---------------- Profile Card ---------------- */
-.profile-card { 
-    background: #ffffff;
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.08);
-    transition: transform 0.2s ease;
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
 }
 
-.profile-card:hover { 
-    transform: scale(1.02); 
-    box-shadow: 0 0 15px rgba(0,0,0,0.12);
+.results {
+  margin-top: 20px;
 }
 
-/* ---------------- Profile Info ---------------- */
-#profileInfo { 
-    max-width: 650px; 
-    margin: 20px auto; 
-    background: #fffaf0; 
-    padding: 25px 30px; 
-    border-radius: 12px; 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
-    border-left: 6px solid #ff6600; 
-    text-align: justify;
+footer {
+  background: #004aad;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 40px;
 }
 
-/* ---------------- About Us / About UnityPass ---------------- */
-#aboutUs, #aboutUnityPass {
-    max-width: 650px;
-    margin: 30px auto;
-    background: #fffaf0;
-    padding: 25px 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    border-left: 6px solid #ff6600;
-    text-align: justify;
+.fade-in {
+  animation: fadeIn 1s ease-in;
 }
 
-#aboutUs h3, #aboutUnityPass h3 {
-    color: #ff6600;
-    margin-bottom: 15px;
-    text-align: center;
-    font-weight: 700;
-    font-size: 1.3rem;
-}
-
-#aboutUs p, #aboutUnityPass p {
-    line-height: 1.7;
-    color: #333;
-    font-size: 1rem;
-}
-
-/* ---------------- Search Section ---------------- */
-#searchSection {
-    text-align: center;
-    margin: 20px 0;
-}
-
-#searchInput {
-    padding: 10px;
-    width: 70%;
-    max-width: 400px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-}
-
-/* ---------------- Search Results ---------------- */
-#searchResults {
-    max-width: 700px;
-    margin: 20px auto;
-}
-
-#searchResults .profile-card {
-    background: #ffffff;
-    padding: 20px;
-    margin-bottom: 15px;
-    border-radius: 10px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.08);
-    transition: transform 0.2s ease;
-}
-
-#searchResults .profile-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 15px rgba(0,0,0,0.12);
-}
-
-/* ---------------- QR Canvas ---------------- */
-#qrCode {
-    margin: 20px auto;
-    display: block;
-    cursor: pointer;
-    transition: transform 0.2s ease;
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
