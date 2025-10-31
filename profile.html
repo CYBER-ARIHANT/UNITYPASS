@@ -1,52 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UnityPass - Profile</title>
-  <link rel="stylesheet" href="style.css">
-  <script src="js/jspdf.umd.min.js"></script>
-  <script src="js/qrcode.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile - UnityPass</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="fade-down">
-    <img src="images/Unitypass.jpg" class="logo" alt="UnityPass Logo">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="register.html">Register</a></li>
-      <li><a href="profile.html" class="active">Profile</a></li>
-    </ul>
-  </nav>
+<nav class="fade-down">
+  <img src="images/Unitypass.jpg" class="logo" alt="UnityPass Logo">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="register.html">Register</a></li>
+    <li><a href="profile.html" class="active">Profile</a></li>
+  </ul>
+</nav>
 
-  <main class="fade-in">
-    <h2>Your <span style="color:#004aad;">Profile</span></h2>
-    <div id="profileInfo"></div>
-    <div id="qrCode" class="fade-in"></div>
+<main class="fade-in">
+  <h2>Your <span style="color:#ff6600;">Profile</span></h2>
+  <div id="profileInfo"></div>
+  <div id="qrCode"></div>
 
-    <div class="buttons">
-      <button id="downloadPdf" class="btn">Download PDF</button>
-      <button id="deleteProfile" class="btn delete">Delete Profile</button>
-    </div>
-  </main>
+  <div class="buttons">
+    <button id="downloadPdf" class="btn">Download PDF</button>
+    <button id="deleteProfile" class="btn danger">Delete Profile</button>
+  </div>
+</main>
 
-  <footer class="fade-up">
+<footer class="fade-up">
+  <div class="footer-content">
     <h3>About UnityPass</h3>
     <p>
       UnityPass is a digital platform that allows unskilled and semi-skilled workers 
-      to create verified profiles showcasing their abilities. Each profile includes 
-      a unique QR code and downloadable ID card, helping workers get recognized and hired easily.
+      to create verified profiles showcasing their abilities. Each profile includes a 
+      unique QR code and downloadable ID card, helping workers get recognized and hired easily.
+      <br><br>
+      <strong>How it works:</strong> Register your skill → Generate your profile → Share your QR for instant verification.
     </p>
-    <p><strong>How it works:</strong> Register your skill → Generate your profile → Share your QR for instant verification.</p>
-
     <h3>About Us</h3>
     <p>
-      Our team — <strong>Arihant Jha</strong>, <strong>Aarav Arora</strong>, <strong>Prisha Jain</strong>, 
-      and <strong>Shreyasee Raipal</strong> — are students of Class 9 who developed this website 
-      to promote employment and empowerment for unskilled labour in our community.
+      Our team — <strong>Arihant Jha</strong>, <strong>Aarav Arora</strong>, 
+      <strong>Prisha Jain</strong>, and <strong>Shreyasee Raipal</strong> — 
+      are students of Class 9 who developed this website to promote employment 
+      and empowerment for unskilled labour in our community.
     </p>
     <p class="credit">© 2025 UnityPass | Created with ❤️ by Team UnityPass</p>
-  </footer>
+  </div>
+</footer>
 
-  <script src="script.js"></script>
+<script src="js/jspdf.umd.min.js"></script>
+<script src="js/qrcode.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>

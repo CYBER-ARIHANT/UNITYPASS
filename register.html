@@ -1,53 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Register - UnityPass</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - UnityPass</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <nav class="fade-down">
-    <img src="images/Unitypass.jpg" class="logo" alt="UnityPass Logo">
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="register.html" class="active">Register</a></li>
-      <li><a href="profile.html">Profile</a></li>
-    </ul>
-  </nav>
+<nav class="fade-down">
+  <img src="images/Unitypass.jpg" class="logo" alt="UnityPass Logo">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="register.html" class="active">Register</a></li>
+    <li><a href="profile.html">Profile</a></li>
+  </ul>
+</nav>
 
-  <section class="form-section fade-in">
-    <h2>Register Your Skills</h2>
-    <form id="registerForm">
-      <input type="text" id="name" placeholder="Full Name" required>
-      <input type="text" id="skill" placeholder="Skill" required>
-      <input type="tel" id="phone" placeholder="9876543210" maxlength="10" required>
-      <input type="text" id="location" placeholder="Location" required>
-      <button type="submit" class="btn">Register</button>
-    </form>
-    <p id="message"></p>
-  </section>
+<section class="form-section fade-in">
+  <h2>Register Your Skills</h2>
+  <form id="registerForm">
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="text" id="skill" placeholder="Skill" required>
+    <input type="tel" id="phone" placeholder="9876543210" maxlength="10" required>
+    <input type="text" id="location" placeholder="Location" required>
+    <button type="submit" class="btn">Register</button>
+  </form>
+  <p id="message"></p>
+</section>
 
-  <footer class="fade-up">
+<footer class="fade-up">
+  <div class="footer-content">
     <h3>About UnityPass</h3>
     <p>
       UnityPass is a digital platform that allows unskilled and semi-skilled workers 
-      to create verified profiles showcasing their abilities. Each profile includes 
-      a unique QR code and downloadable ID card, helping workers get recognized and hired easily.
+      to create verified profiles showcasing their abilities. Each profile includes a 
+      unique QR code and downloadable ID card, helping workers get recognized and hired easily.
+      <br><br>
+      <strong>How it works:</strong> Register your skill → Generate your profile → Share your QR for instant verification.
     </p>
-    <p><strong>How it works:</strong> Register your skill → Generate your profile → Share your QR for instant verification.</p>
-
     <h3>About Us</h3>
     <p>
-      Our team — <strong>Arihant Jha</strong>, <strong>Aarav Arora</strong>, <strong>Prisha Jain</strong>, 
-      and <strong>Shreyasee Raipal</strong> — are students of Class 9 who developed this website 
-      to promote employment and empowerment for unskilled labour in our community.
+      Our team — <strong>Arihant Jha</strong>, <strong>Aarav Arora</strong>, 
+      <strong>Prisha Jain</strong>, and <strong>Shreyasee Raipal</strong> — 
+      are students of Class 9 who developed this website to promote employment 
+      and empowerment for unskilled labour in our community.
     </p>
     <p class="credit">© 2025 UnityPass | Created with ❤️ by Team UnityPass</p>
-  </footer>
+  </div>
+</footer>
 
-  <script src="js/jspdf.umd.min.js"></script>
-  <script src="js/qrcode.min.js"></script>
-  <script src="script.js"></script>
+<script src="js/jspdf.umd.min.js"></script>
+<script src="js/qrcode.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
