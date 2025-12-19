@@ -1,18 +1,46 @@
 <!DOCTYPE html>
-<html>
-<head><meta charset="UTF-8"><title>UnityPass</title><link rel="stylesheet" href="style.css"></head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UnityPass</title>
+<link rel="stylesheet" href="style.css">
+</head>
 <body>
-<nav><img src="images/Unitypass.png" class="logo"></nav>
-<section class="home">
-<h1>UnityPass</h1>
-<p id="en">UnityPass is a digital platform that allows unskilled and semi-skilled workers to create verified profiles showcasing their abilities.</p>
-<p id="hi" style="display:none;">यूनिटीपास एक डिजिटल प्लेटफॉर्म है जो अकुशल और अर्ध-कुशल श्रमिकों को सत्यापित प्रोफ़ाइल बनाने में मदद करता है।</p>
-<button onclick="toggleLang()">English / हिंदी</button>
+
+<nav>
+  <img src="images/logo.jpg" class="logo" alt="UnityPass Logo">
+  <ul>
+    <li><a class="active" href="index.html">Home</a></li>
+    <li><a href="register.html">Register</a></li>
+    <li><a href="profile.html">Profile</a></li>
+  </ul>
+</nav>
+
+<section class="home fade-in">
+  <h1>Welcome to <span>UnityPass</span></h1>
+  <p>Create your digital skill ID — Simple, Fast & Free</p>
+  <a href="register.html" class="btn">Register Now</a>
 </section>
-<script>
-function toggleLang(){
-en.style.display=en.style.display==="none"?"block":"none";
-hi.style.display=hi.style.display==="none"?"block":"none";
-}
-</script>
-</body></html>
+
+<section class="info fade-in">
+  <h3>About UnityPass</h3>
+  <p>
+    UnityPass is a digital platform that allows unskilled and semi-skilled workers
+    to create verified profiles showcasing their abilities. Each profile includes
+    a unique QR code and downloadable ID card for easy verification.
+  </p>
+  <p><strong>How it works:</strong> Register → Generate Profile → Share QR → Get Recognized</p>
+
+  <h3>About Us</h3>
+  <p>
+    Our team — <strong>Arihant Jha, Aarav Arora, Prisha Jain, and Shreyasee Raipal</strong> —
+    are students of Class 9 who developed UnityPass to promote employment and
+    empowerment for unskilled labour.
+  </p>
+</section>
+
+<footer>© 2025 UnityPass | Created with ❤️ by Team UnityPass</footer>
+
+</body>
+</html>

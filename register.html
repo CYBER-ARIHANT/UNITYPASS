@@ -1,12 +1,33 @@
 <!DOCTYPE html>
-<html><head><title>Register</title><link rel="stylesheet" href="style.css"></head>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register - UnityPass</title>
+<link rel="stylesheet" href="style.css">
+</head>
 <body>
-<form id="registerForm">
-<input id="name" placeholder="Name">
-<input id="skill" placeholder="Skill">
-<input id="phone" placeholder="Phone">
-<input id="location" placeholder="Location">
-<button>Register</button>
-</form>
+
+<nav>
+  <img src="images/logo.jpg" class="logo">
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a class="active" href="register.html">Register</a></li>
+    <li><a href="profile.html">Profile</a></li>
+  </ul>
+</nav>
+
+<section class="form-section fade-in">
+  <h2>Register Your Skills</h2>
+  <form id="registerForm">
+    <input id="name" placeholder="Full Name" required>
+    <input id="skill" placeholder="Skill" required>
+    <input id="phone" placeholder="10-digit Phone" required>
+    <input id="location" placeholder="Location" required>
+    <button class="btn">Register</button>
+  </form>
+</section>
+
 <script src="script.js"></script>
-</body></html>
+</body>
+</html>

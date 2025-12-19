@@ -1,1 +1,70 @@
-body{font-family:Arial;text-align:center}
+body {
+  margin: 0;
+  font-family: Poppins, Arial, sans-serif;
+  background: #fff;
+}
+
+nav {
+  background: #111;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+}
+
+.logo { height: 42px; }
+
+nav a {
+  color: white;
+  text-decoration: none;
+  margin-left: 15px;
+}
+
+nav a.active { color: orange; }
+
+.home {
+  text-align: center;
+  padding: 90px 20px;
+}
+
+.home span { color: orange; }
+
+.btn {
+  background: linear-gradient(45deg, orange, gold);
+  color: white;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.form-section, .profile-card, .info {
+  max-width: 550px;
+  margin: 40px auto;
+  background: #fff7e6;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,.1);
+}
+
+#qrCode {
+  margin-top: 20px;
+  text-align: center;
+}
+
+footer {
+  text-align: center;
+  padding: 20px;
+  background: #111;
+  color: white;
+}
+
+.fade-in {
+  animation: fade 1s ease forwards;
+}
+
+@keyframes fade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
