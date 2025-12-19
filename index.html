@@ -1,61 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>UnityPass</title>
-<link rel="stylesheet" href="style.css">
-</head>
+<html>
+<head><meta charset="UTF-8"><title>UnityPass</title><link rel="stylesheet" href="style.css"></head>
 <body>
-<nav class="fade-down">
-  <img src="images/Unitypass.png" class="logo" alt="UnityPass Logo">
-  <ul>
-    <li><a href="index.html" class="active">Home</a></li>
-    <li><a href="register.html">Register</a></li>
-    <li><a href="profile.html">Profile</a></li>
-  </ul>
-</nav>
-
-<section class="hero fade-in">
-  <div class="left">
-    <h1>Welcome to <span class="typewriter">UnityPass</span></h1>
-    <p>Create your digital skill ID card — simple, fast & free for everyone.</p>
-    <div>
-      <button class="cta bounce" id="registerNow">Register Now</button>
-    </div>
-  </div>
-  <div class="right">
-    <!-- small illustrative SVG -->
-    <svg width="320" height="220" viewBox="0 0 320 220" xmlns="http://www.w3.org/2000/svg">
-      <rect rx="18" width="320" height="220" fill="#fff8f2" />
-      <g transform="translate(18,18)">
-        <rect x="10" y="10" width="120" height="80" rx="8" fill="#fff" stroke="#ffd6b3"/>
-        <circle cx="200" cy="70" r="40" fill="#fff7f0" stroke="#ffb277"/>
-        <rect x="10" y="110" width="260" height="18" rx="8" fill="#fff"/>
-      </g>
-    </svg>
-  </div>
+<nav><img src="images/Unitypass.png" class="logo"></nav>
+<section class="home">
+<h1>UnityPass</h1>
+<p id="en">UnityPass is a digital platform that allows unskilled and semi-skilled workers to create verified profiles showcasing their abilities.</p>
+<p id="hi" style="display:none;">यूनिटीपास एक डिजिटल प्लेटफॉर्म है जो अकुशल और अर्ध-कुशल श्रमिकों को सत्यापित प्रोफ़ाइल बनाने में मदद करता है।</p>
+<button onclick="toggleLang()">English / हिंदी</button>
 </section>
-
-<section id="searchSection" class="search-section fade-in">
-  <h2>Find Registered Profiles</h2>
-  <input id="searchInput" type="text" placeholder="Search by name, skill or location...">
-  <div id="searchResults" class="results"></div>
-</section>
-
-<footer class="fade-up">
-  <div class="footer-content">
-    <h3>About UnityPass</h3>
-    <p>UnityPass is a digital platform that allows unskilled and semi-skilled workers to create verified profiles showcasing their abilities. Each profile includes a unique QR code and downloadable ID card, helping workers get recognized and hired easily.</p>
-    <p><strong>How it works:</strong> Register your skill → Generate your profile → Share your QR for instant verification.</p>
-    <h3>About Us</h3>
-    <p>Our team — <strong>Arihant Jha</strong>, <strong>Aarav Arora</strong>, <strong>Prisha Jain</strong>, and <strong>Shreyasee Raipal</strong> — are students of Class 9 who developed this website to promote employment and empowerment for unskilled labour in our community.</p>
-    <p class="credit">© 2025 UnityPass | Created with ❤️ by Team UnityPass</p>
-  </div>
-</footer>
-
-<script src="js/jspdf.umd.min.js"></script>
-<script src="js/qrcode.min.js"></script>
-<script src="script.js"></script>
-</body>
-</html>
+<script>
+function toggleLang(){
+en.style.display=en.style.display==="none"?"block":"none";
+hi.style.display=hi.style.display==="none"?"block":"none";
+}
+</script>
+</body></html>
